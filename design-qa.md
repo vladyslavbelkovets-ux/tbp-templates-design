@@ -1,61 +1,64 @@
-# Design QA — Template page
+# Design QA — Templates / Invoice / Forms preview
 
 ## final result: passed
 
-No P0, P1, or P2 visual issues remain in the reviewed desktop implementation.
+No P0, P1, or P2 visual or interaction issues remain in the reviewed six-state implementation.
 
-## Populated catalog update
+## Reviewed sources
 
-- 56 user-provided previews are mapped to 56 unique template names across seven categories.
-- `All templates` uses five real pages at 12 cards per page; Contracts uses two pages; smaller categories use one.
-- Category filtering, combined category/search filtering, and pagination were verified in the browser.
-- Every configured preview exists, loads at `1200 × 1553`, and has title-specific alt text.
-- Desktop and mobile evidence: `qa/catalog-content-1440.jpg` and `qa/catalog-content-mobile.jpg`.
-- No horizontal overflow or browser console errors/warnings.
+- Templates desktop and mobile: existing approved implementation based on Figma nodes `15:19695`, `39:11153`, and `72:30766`.
+- Forms desktop/mobile: Figma section `205:24460`, frames `205:24461` and `205:24526`.
+- Invoice desktop/mobile: Figma section `205:24595`, frames `205:24596` and `205:24611`.
+- Source captures: `docs/figma-forms-desktop.png`, `docs/figma-forms-mobile.png`, `docs/figma-invoices-desktop.png`, and `docs/figma-invoices-mobile.png`.
 
-## Comparison setup
+## Same-input visual comparisons
 
-- Current Figma page: `docs/figma-reference-current.png`, frame `15:19695`, `1440 × 3953`.
-- Current implementation: `qa/implementation-current-1440.png`, captured at `1440 × 3953`.
-- Same-input comparison: `qa/full-page-current-comparison.png` (Figma left, implementation right).
-- Card variants: Figma node `15:20776` compared in `qa/card-states-comparison.png`.
-- Desktop state: page 1, `All templates`, empty search, all cards in their default state.
+Reference is on the left; implementation is on the right.
 
-## Findings resolved
+- Forms desktop: `qa/forms-desktop-comparison.jpg`.
+- Forms mobile: `qa/forms-mobile-comparison.jpg`.
+- Invoice desktop: `qa/invoice-desktop-comparison.jpg`.
+- Invoice mobile: `qa/invoice-mobile-comparison.jpg`.
+- Preview workbench with both switch groups: `qa/preview-switches.png`.
 
-1. Replaced the incorrect Outfit project font with Inter and loaded weights 300, 400, 500, 600, 700, and 900.
-2. Preserved the Figma-specific footer exceptions: Arial Bold for the upper footer headings and Inter Black for the lower footer headings.
-3. Replaced the permanently emphasized second card with real default and hover/focus states on every card.
-4. Matched the current card radius, button radius/type, description color, dock padding, and two-layer hover shadow.
-5. Added the two current contract-information sections that now appear before the footer in frame `15:19695`.
-6. Restored the 40px Figma gap between the desktop header and hero content.
+The comparisons were reviewed after the implementation screenshots were captured at the same 1440px and 375px viewport widths as the Figma frames.
 
 ## Structural checks
 
-- Document: `1440 × 3953`, matching Figma.
-- Hero: `378px`; heading at `y=160`, search field at `y=290`.
-- Catalog: `1640px`, 197px category rail, 3 × 4 card grid.
-- Information sections: two blocks at `524px` each; inner widths `906px` and `1146px`.
-- Footer: `887px` total.
-- Horizontal overflow: none at 1440px.
+- Forms desktop: `1440 × 5059`; hero `378px`; catalog `1632px`; forms guide `2162px`; footer `887px`.
+- Invoice desktop: `1440 × 2825`; hero `378px`; catalog `1560px`; footer starts at `y=1938`; footer `887px`.
+- Forms mobile: hero `260px`; catalog `1634px`; forms guide `2664px`; cards `343 × 232`.
+- Invoice mobile: hero `260px`; catalog `1634px`; cards `343 × 232`.
+- No horizontal overflow at 1440px or 375px in Templates, Invoice, or Forms.
 
-## Typography checks
+## Content and responsive checks
 
-- Hero title: Inter 700, `48/56`.
-- Navigation: Inter 500, `18/26`.
-- Search: Inter 300, `16/24`.
-- Card title: Inter 600, `16/20`.
-- Card description: Inter 400, `14/18`.
-- Card button: Inter 500, `14/18`.
-- Information heading: Inter 600, `28/34`.
-- Information body: Inter 400, `16/22`.
-- Upper footer headings: Arial 700, `16/19.2`.
-- Lower footer headings: Inter 900, `16/19.2`.
+- Forms mobile page 1 uses the six source previews and copy from Figma: W-9, W-4, 1099-NEC, W-2, 1040-ES, and 941.
+- Forms desktop preserves the exact 12-card first page shown in Figma and the ten-page selector.
+- Invoice desktop renders 12 cards with no page selector; Invoice mobile renders six cards with the ten-page selector.
+- Forms includes both feature groups, the four-step workflow, statistics, desktop FAQ, legal disclaimer, and the Figma-specific mobile stacking behavior.
+- Mobile service tabs use `All templates`; desktop service navigation uses `All`, matching the supplied states.
+- Existing Inter typography, button radii, card radii, and TheBestPDF values were preserved.
 
-## State and interaction checks
+## Interaction checks
 
-- Default card: no outer shadow, 24px preview dock padding.
-- Hover/focus card: Figma two-layer shadow and 16px preview dock padding.
-- `:focus-within` was verified on the production card grid.
-- Search, empty-state recovery, categories, pagination, login/template feedback, and mobile navigation remain functional.
-- Browser console errors/warnings: none.
+- Viewport switch: Mobile / Desktop.
+- Page switch: Invoice / Templates / Forms.
+- All six switch combinations load in-place without a page refresh and keep the selected state in the URL.
+- Search, category tabs, pagination, FAQ expansion, mobile navigation, and login feedback work.
+- Mobile search hides category filters as specified.
+- Clicking anywhere on a card triggers the template action; hovering a desktop card also activates the `Use template` hover state.
+- The production build completes successfully.
+- Production preview console: 0 errors, 0 warnings.
+
+## UI-PES connection
+
+- Switches, login, card CTA, pagination, category controls, FAQ controls, mobile menu, and search all use components from `@universe-forma/ui-pes`.
+- Icons use the existing Phosphor icon dependency; no handmade SVG or placeholder UI was introduced.
+
+## Comparison history
+
+1. Initial Forms mobile comparison exposed empty W-2 and 1099-NEC image payloads from the Figma asset endpoint.
+2. Replaced those two empty payloads with exact source captures from their Figma card nodes.
+3. Aligned service-page hero/catalog heights and the Invoice desktop catalog/footer boundary.
+4. Matched the service mobile `All templates` tab and verified all six final states.

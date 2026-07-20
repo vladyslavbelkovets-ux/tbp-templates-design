@@ -72,6 +72,7 @@ const templateGroups = {
 };
 
 export const categories = ["All templates", ...Object.keys(templateGroups)];
+export const serviceCategories = ["All", "Popular", "Tax", "Immigration", "Passport & travel", "Healthcare"];
 
 const templateDescriptions = {
   "Cash Receipt": "Confirm a cash payment with amount and payer details.",
@@ -141,5 +142,51 @@ export const templates = Object.entries(templateGroups).flatMap(([category, titl
     preview: `template-previews/${category}-${title}.png`,
   })),
 );
+
+export const formMobileTemplates = [
+  {
+    id: "forms:form-w-9",
+    category: "Tax",
+    title: "Form W-9",
+    description: "Request for Taxpayer Identification Number.",
+    preview: "form-previews/form-w9.png",
+  },
+  {
+    id: "forms:form-w-4",
+    category: "Tax",
+    title: "Form W-4",
+    description: "Employee's Withholding Certificate.",
+    preview: "form-previews/form-w4.png",
+  },
+  {
+    id: "forms:form-1099-nec",
+    category: "Tax",
+    title: "Form 1099-NEC",
+    description: "Nonemployee Compensation.",
+    preview: "form-previews/form-1099-nec.png",
+  },
+  {
+    id: "forms:form-w-2",
+    category: "Tax",
+    title: "Form W-2",
+    description: "Wage and Tax Statement.",
+    preview: "form-previews/form-w2.png",
+  },
+  {
+    id: "forms:form-1040-es",
+    category: "Tax",
+    title: "Form 1040-ES",
+    description: "Estimated Tax for Individuals.",
+    preview: "form-previews/form-1040-es.png",
+  },
+  {
+    id: "forms:form-941",
+    category: "Tax",
+    title: "Form 941",
+    description: "Employer's Quarterly Federal Tax Return.",
+    preview: "form-previews/form-941.png",
+  },
+  ...templates.slice(6),
+];
 
 export const templatesPerPage = 12;

@@ -1,7 +1,27 @@
-import { useEffect, useMemo, useState } from "react";
-import { CaretDown, CaretLeft, CaretRight, Info, List, MagnifyingGlass, X } from "@phosphor-icons/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Airplane,
+  Buildings,
+  CaretDown,
+  CaretLeft,
+  CaretRight,
+  ChartBar,
+  Desktop,
+  DownloadSimple,
+  FileText,
+  Heartbeat,
+  House,
+  Info,
+  Keyboard,
+  List,
+  MagnifyingGlass,
+  Signature,
+  UsersThree,
+  Wrench,
+  X,
+} from "@phosphor-icons/react";
 import { Button, IconButton, Input } from "@universe-forma/ui-pes";
-import { categories, templates, templatesPerPage } from "./templateData";
+import { categories, formMobileTemplates, serviceCategories, templates, templatesPerPage } from "./templateData";
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
@@ -151,7 +171,10 @@ function Header({ onMessage }) {
   );
 }
 
-function Hero({ query, onQueryChange, onMessage }) {
+function Hero({ config, query, onQueryChange, onMessage }) {
+  const isMobile = useMediaQuery("(max-width: 620px)");
+  const placeholder = isMobile ? config.mobilePlaceholder : config.placeholder;
+
   return (
     <section className="hero">
       <img className="hero__background" src={asset("hero-background.png")} alt="" />
@@ -159,20 +182,20 @@ function Hero({ query, onQueryChange, onMessage }) {
       <div className="hero__content">
         <div className="hero__copy">
           <h1>
-            Ready-to-use <span>document templates</span>
+            Ready-to-use <span>{config.heading}</span>
           </h1>
-          <p className="hero__tagline hero__tagline--desktop">Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.</p>
-          <p className="hero__tagline hero__tagline--mobile">Browse 10,000+ free templates. Customize and download in minutes.</p>
+          <p className="hero__tagline hero__tagline--desktop">{config.desktopTagline}</p>
+          <p className="hero__tagline hero__tagline--mobile">{config.mobileTagline}</p>
         </div>
         <Input
-          id="template-search"
+          id={`${config.key}-search`}
           type="search"
           size="lg"
           bg="default"
           value={query}
           onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search templates…"
-          aria-label="Search templates"
+          placeholder={placeholder}
+          aria-label={placeholder.replace("…", "")}
           rootClassName="hero-search"
           containerClassName="hero-search__container"
           className="hero-search__control"
@@ -190,7 +213,7 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
       onClick={() => onUse(template)}
     >
       <div className="template-card__dock">
-        <div className="template-card__preview">
+        <div className={`template-card__preview${template.previewFit === "stretch" ? " template-card__preview--stretch" : ""}`}>
           <img src={asset(template.preview)} alt={`${template.title} preview`} />
         </div>
       </div>
@@ -271,23 +294,26 @@ function Pagination({ page, pageCount, onPageChange }) {
   );
 }
 
-function Catalog({ query, onQueryChange, onMessage }) {
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+function Catalog({ config, query, onQueryChange, onMessage }) {
+  const [activeCategory, setActiveCategory] = useState(config.categoryOptions[0]);
   const [page, setPage] = useState(1);
   const isMobile = useMediaQuery("(max-width: 620px)");
   const pageSize = isMobile ? 6 : templatesPerPage;
   const isMobileSearch = isMobile && query.trim().length > 0;
+  const sourceItems = isMobile && config.mobileItems ? config.mobileItems : config.items;
   const filteredTemplates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    return templates.filter((template) => {
+    const categoryIndex = config.categoryOptions.indexOf(activeCategory);
+
+    return sourceItems.filter((template, index) => {
       const matchesCategory = isMobileSearch
-        || activeCategory === categories[0]
-        || template.category === activeCategory;
+        || activeCategory === config.categoryOptions[0]
+        || (config.key === "templates" ? template.category === activeCategory : index % (config.categoryOptions.length - 1) === categoryIndex - 1);
       const matchesQuery = !normalizedQuery
         || `${template.title} ${template.category} ${template.description}`.toLowerCase().includes(normalizedQuery);
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, isMobileSearch, query]);
+  }, [activeCategory, config, isMobileSearch, query, sourceItems]);
 
   const pageCount = Math.max(1, Math.ceil(filteredTemplates.length / pageSize));
   const currentPage = Math.min(page, pageCount);
@@ -307,13 +333,13 @@ function Catalog({ query, onQueryChange, onMessage }) {
   };
 
   return (
-    <main className={`catalog${isMobileSearch ? " catalog--mobile-search" : ""}`} id="templates">
+    <main className={`catalog catalog--${config.key}${isMobileSearch ? " catalog--mobile-search" : ""}`} id="templates">
       <section className="catalog__panel">
         {!isMobileSearch ? (
-          <aside className="categories" aria-label="Template categories">
+          <aside className="categories" aria-label={`${config.singular} categories`}>
             <h2>Categories</h2>
             <div className="categories__list">
-              {categories.map((category) => (
+              {config.categoryOptions.map((category) => (
                 <Button
                   variant="text"
                   color="action"
@@ -324,7 +350,7 @@ function Catalog({ query, onQueryChange, onMessage }) {
                   aria-pressed={activeCategory === category}
                   onClick={() => chooseCategory(category)}
                 >
-                  {category}
+                  {isMobile && config.key !== "templates" && category === config.categoryOptions[0] ? "All templates" : category}
                 </Button>
               ))}
             </div>
@@ -405,9 +431,43 @@ const faqItems = [
   },
 ];
 
-function ContractGuide() {
+function FaqList({ title, items, className = "", idPrefix = "faq" }) {
   const [openFaq, setOpenFaq] = useState(null);
 
+  return (
+    <section className={`faq ${className}`.trim()}>
+      <h3>{title}</h3>
+      <div className="faq__list">
+        {items.map((item, index) => {
+          const isOpen = openFaq === index;
+          const panelId = `${idPrefix}-panel-${index}`;
+
+          return (
+            <div className={`faq__item${isOpen ? " is-open" : ""}`} key={item.question}>
+              <Button
+                variant="text"
+                color="action"
+                size="md"
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => setOpenFaq(isOpen ? null : index)}
+              >
+                <span>{item.question}</span>
+                <span className="faq__icon" aria-hidden="true"><CaretDown size={24} /></span>
+              </Button>
+              <div className="faq__answer" id={panelId} hidden={!isOpen}>
+                <p>{item.answer}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function ContractGuide() {
   return (
     <section className="contract-guide">
       <div className="contract-guide__inner">
@@ -436,40 +496,178 @@ function ContractGuide() {
               ))}
             </div>
           </section>
-          <section className="faq">
-            <h3>Frequently asked questions</h3>
-            <div className="faq__list">
-              {faqItems.map((item, index) => {
-                const isOpen = openFaq === index;
-                const panelId = `faq-panel-${index}`;
-
-                return (
-                  <div className={`faq__item${isOpen ? " is-open" : ""}`} key={item.question}>
-                    <Button
-                      variant="text"
-                      color="action"
-                      size="md"
-                      type="button"
-                      aria-expanded={isOpen}
-                      aria-controls={panelId}
-                      onClick={() => setOpenFaq(isOpen ? null : index)}
-                    >
-                      <span>{item.question}</span>
-                      <span className="faq__icon" aria-hidden="true"><CaretDown size={24} /></span>
-                    </Button>
-                    <div className="faq__answer" id={panelId} hidden={!isOpen}>
-                      <p>{item.answer}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+          <FaqList title="Frequently asked questions" items={faqItems} />
           <aside className="legal-alert" aria-label="Legal information">
             <span className="legal-alert__icon" aria-hidden="true"><Info size={24} weight="fill" /></span>
             <p>TheBestPDF is not a law firm and does not provide legal advice. These templates are provided for general informational and self-help purposes only, and are not a substitute for the advice of a qualified attorney.</p>
           </aside>
         </div>
+      </div>
+    </section>
+  );
+}
+
+const formNeedItems = [
+  {
+    icon: Buildings,
+    title: "Starting and running a business",
+    description: "Official forms for setting up and meeting your filing deadlines.",
+  },
+  {
+    icon: Airplane,
+    title: "Travel and identity",
+    description: "Apply for or renew a U.S. passport with the DS-11 and DS-82.",
+  },
+  {
+    icon: FileText,
+    title: "Filing your taxes",
+    description: "Income, withholding, and self-employment forms, including tax forms for independent contractors like the W-9 and W-4.",
+  },
+  {
+    icon: UsersThree,
+    title: "Hiring and paying people",
+    description: "Onboard and pay workers with the I-9, W-4, and contractor forms.",
+  },
+  {
+    icon: Heartbeat,
+    title: "Claiming healthcare costs",
+    description: "Submit medical claims with the CMS-1500.",
+  },
+];
+
+const professionalItems = [
+  {
+    icon: Desktop,
+    title: "Self-employed & freelancers",
+    description: "Send W-9s, report income, and stay on top of estimated taxes.",
+  },
+  {
+    icon: ChartBar,
+    title: "Small business owners",
+    description: "Manage payroll, hiring, and tax filings without the paperwork pile.",
+  },
+  {
+    icon: House,
+    title: "Individuals & households",
+    description: "Take care of passport, healthcare, and personal tax forms from home.",
+  },
+  {
+    icon: Wrench,
+    title: "Contractors",
+    description: "Handle client and tax paperwork in minutes, then sign and send.",
+  },
+  {
+    icon: UsersThree,
+    title: "Small teams & HR",
+    description: "Onboard employees with the I-9 and W-4 using shared access.",
+  },
+];
+
+const formSteps = [
+  {
+    icon: MagnifyingGlass,
+    number: "01",
+    title: "Choose your form",
+    description: "Search or pick a category to find the official form you need.",
+  },
+  {
+    icon: Keyboard,
+    number: "02",
+    title: "Fill it out online",
+    description: "Type straight into the form, field by field.",
+  },
+  {
+    icon: Signature,
+    number: "03",
+    title: "Sign and date it",
+    description: "Add your signature electronically in a click.",
+  },
+  {
+    icon: DownloadSimple,
+    number: "04",
+    title: "Download or print",
+    description: "Get a clean PDF ready to file or send.",
+  },
+];
+
+const formFaqItems = [
+  {
+    question: "Are these the official, current versions of the forms?",
+    answer: "We keep the library current, but you should always verify the latest version and filing requirements with the issuing agency.",
+  },
+  {
+    question: "Can I fill out and sign a form online?",
+    answer: "Yes. Open a form, complete its fields in your browser, and add an electronic signature before downloading it.",
+  },
+  {
+    question: "Can I download or print the completed form?",
+    answer: "Yes. You can download a clean PDF or print the completed form when you are ready to file or share it.",
+  },
+  {
+    question: "Is my information secure?",
+    answer: "Your form data is handled through secure browser and document-processing controls designed to protect your information.",
+  },
+  {
+    question: "Does TheBestPDF provide legal or tax advice?",
+    answer: "No. TheBestPDF provides convenient fillable templates and does not replace advice from a qualified legal or tax professional.",
+  },
+];
+
+function FeatureGroup({ title, items }) {
+  return (
+    <section className="forms-feature-group">
+      <h2>{title}</h2>
+      <div className="forms-feature-group__grid">
+        {items.map(({ icon: Icon, title: itemTitle, description }) => (
+          <article className="forms-feature" key={itemTitle}>
+            <span className="forms-feature__icon" aria-hidden="true"><Icon size={20} weight="fill" /></span>
+            <div>
+              <h3>{itemTitle}</h3>
+              <p>{description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FormsGuide() {
+  return (
+    <section className="forms-guide">
+      <div className="forms-guide__inner">
+        <FeatureGroup title="A form for whatever you need" items={formNeedItems} />
+        <FeatureGroup title="Made for every professional" items={professionalItems} />
+        <section className="forms-how">
+          <div className="forms-how__heading">
+            <h2>How it works</h2>
+            <p>Complete any form in four steps, right in your browser.</p>
+          </div>
+          <div className="forms-how__steps">
+            {formSteps.map(({ icon: Icon, number, title, description }) => (
+              <article className="form-step" key={number}>
+                <div className="form-step__top">
+                  <span className="form-step__icon" aria-hidden="true"><Icon size={20} /></span>
+                  <span className="form-step__number">{number}</span>
+                </div>
+                <div className="form-step__copy">
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="forms-stats" aria-label="Forms statistics">
+          <div><strong>4.4★</strong><span>rated on Trustpilot</span></div>
+          <div><strong>500K+</strong><span>forms completed</span></div>
+          <div><strong>50</strong><span>U.S. states supported</span></div>
+        </section>
+        <FaqList title="Forms FAQ" items={formFaqItems} className="forms-faq" idPrefix="forms-faq" />
+        <aside className="legal-alert forms-legal-alert" aria-label="Forms legal information">
+          <span className="legal-alert__icon" aria-hidden="true"><Info size={24} weight="fill" /></span>
+          <p>TheBestPDF is not a law firm, a government agency, or a tax advisor, and is not affiliated with the IRS, USCIS, the U.S. Department of State, or CMS. We provide fillable form templates for your convenience. Always verify the current official version and requirements with the issuing agency.</p>
+        </aside>
       </div>
     </section>
   );
@@ -531,27 +729,226 @@ function Footer() {
   );
 }
 
-export function App() {
-  const preview = new URLSearchParams(window.location.search).get("preview");
-  const showCardStates = preview === "card-states";
-  const capturePage = preview === "page-qa";
+const repeatTemplates = (items, count, prefix) => Array.from({ length: count }, (_, index) => ({
+  ...items[index % items.length],
+  id: `${prefix}:${index + 1}`,
+}));
+
+const pageConfigs = {
+  templates: {
+    key: "templates",
+    label: "Templates",
+    singular: "template",
+    heading: "document templates",
+    desktopTagline: "Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.",
+    mobileTagline: "Browse 10,000+ free templates. Customize and download in minutes.",
+    placeholder: "Search templates…",
+    mobilePlaceholder: "Search templates…",
+    categoryOptions: categories,
+    items: templates,
+    guide: "contracts",
+  },
+  invoice: {
+    key: "invoice",
+    label: "Invoice",
+    singular: "invoice",
+    heading: "invoices",
+    desktopTagline: "Create a professional invoices in minutes. Customize and download as PDF, Word or Excel.",
+    mobileTagline: "Create a professional invoices in minutes. Customize and download as PDF, Word or Excel.",
+    placeholder: "Search invoices…",
+    mobilePlaceholder: "Search invoices…",
+    categoryOptions: serviceCategories,
+    items: templates.slice(0, 12),
+    mobileItems: templates,
+    guide: null,
+  },
+  forms: {
+    key: "forms",
+    label: "Forms",
+    singular: "form",
+    heading: "forms",
+    desktopTagline: "Create a professional form in minutes. Customize and download as PDF, Word or Excel.",
+    mobileTagline: "Create a professional form in minutes. Customize and download as PDF, Word or Excel.",
+    placeholder: "Search form…",
+    mobilePlaceholder: "Search forms…",
+    categoryOptions: serviceCategories,
+    items: repeatTemplates(templates, 120, "forms"),
+    mobileItems: formMobileTemplates,
+    guide: "forms",
+  },
+};
+
+function ProductPage({ view = "templates", capturePage = false, embedded = false }) {
+  const config = pageConfigs[view] ?? pageConfigs.templates;
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
 
-  if (showCardStates) return <CardStatesPreview />;
+  useEffect(() => {
+    document.title = `Ready-to-use ${config.heading} — TheBestPDF`;
+  }, [config.heading]);
 
   const showMessage = (text) => {
     setMessage(text);
     window.setTimeout(() => setMessage(""), 2200);
   };
 
+  useEffect(() => {
+    if (!embedded || window.parent === window) return undefined;
+
+    const publishHeight = () => {
+      window.parent.postMessage({
+        type: "tbp-preview-height",
+        view: config.key,
+        height: document.documentElement.scrollHeight,
+      }, window.location.origin);
+    };
+    const observer = new ResizeObserver(publishHeight);
+    observer.observe(document.documentElement);
+    window.addEventListener("load", publishHeight);
+    publishHeight();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("load", publishHeight);
+    };
+  }, [config.key, embedded]);
+
   return (
-    <div className={`page-shell${capturePage ? " page-shell--qa-capture" : ""}`}>
-      <Hero query={query} onQueryChange={setQuery} onMessage={showMessage} />
-      <Catalog query={query} onQueryChange={setQuery} onMessage={showMessage} />
-      <ContractGuide />
+    <div className={`page-shell page-shell--${config.key}${capturePage ? " page-shell--qa-capture" : ""}`}>
+      <Hero config={config} query={query} onQueryChange={setQuery} onMessage={showMessage} />
+      <Catalog key={config.key} config={config} query={query} onQueryChange={setQuery} onMessage={showMessage} />
+      {config.guide === "contracts" ? <ContractGuide /> : null}
+      {config.guide === "forms" ? <FormsGuide /> : null}
       <Footer />
       <div className={`status-toast${message ? " is-visible" : ""}`} role="status" aria-live="polite">{message}</div>
     </div>
   );
+}
+
+function PreviewWorkbench() {
+  const params = new URLSearchParams(window.location.search);
+  const initialView = pageConfigs[params.get("view")] ? params.get("view") : "templates";
+  const initialViewport = params.get("viewport") === "mobile" ? "mobile" : "desktop";
+  const [view, setView] = useState(initialView);
+  const [viewport, setViewport] = useState(initialViewport);
+  const [frameHeight, setFrameHeight] = useState(1000);
+  const [availableWidth, setAvailableWidth] = useState(() => window.innerWidth - 32);
+  const frameWidth = viewport === "mobile" ? 375 : 1440;
+  const scale = Math.min(1, availableWidth / frameWidth);
+  const iframeRef = useRef(null);
+
+  useEffect(() => {
+    document.title = "TheBestPDF design preview";
+  }, []);
+
+  useEffect(() => {
+    const updateWidth = () => setAvailableWidth(Math.max(320, window.innerWidth - 32));
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  useEffect(() => {
+    const handleHeight = (event) => {
+      if (event.origin !== window.location.origin || event.source !== iframeRef.current?.contentWindow) return;
+      if (event.data?.type === "tbp-preview-height" && event.data.view === view) {
+        setFrameHeight(Math.max(1, Math.ceil(event.data.height)));
+      }
+    };
+    window.addEventListener("message", handleHeight);
+    return () => window.removeEventListener("message", handleHeight);
+  }, [view]);
+
+  useEffect(() => {
+    const nextUrl = new URL(window.location.href);
+    nextUrl.search = "";
+    nextUrl.searchParams.set("view", view);
+    nextUrl.searchParams.set("viewport", viewport);
+    window.history.replaceState({}, "", nextUrl);
+  }, [view, viewport]);
+
+  const previewUrl = new URL(window.location.href);
+  previewUrl.search = "";
+  previewUrl.searchParams.set("embedded", "1");
+  previewUrl.searchParams.set("view", view);
+
+  const chooseView = (nextView) => {
+    setFrameHeight(1000);
+    setView(nextView);
+  };
+
+  return (
+    <main className="preview-workbench">
+      <header className="preview-toolbar">
+        <div className="preview-toolbar__brand">
+          <span>THEBESTPDF</span>
+          <strong>Design preview</strong>
+        </div>
+        <div className="preview-toolbar__controls">
+          <div className="preview-switch" aria-label="Viewport">
+            {[
+              ["mobile", "Mobile"],
+              ["desktop", "Desktop"],
+            ].map(([value, label]) => (
+              <Button
+                key={value}
+                type="button"
+                size="ms"
+                color="primary"
+                variant={viewport === value ? "filled-tonal" : "text"}
+                className={viewport === value ? "is-active" : ""}
+                aria-pressed={viewport === value}
+                onClick={() => setViewport(value)}
+              >
+                {label}
+              </Button>
+            ))}
+          </div>
+          <div className="preview-switch" aria-label="Page">
+            {[
+              ["invoice", "Invoice"],
+              ["templates", "Templates"],
+              ["forms", "Forms"],
+            ].map(([value, label]) => (
+              <Button
+                key={value}
+                type="button"
+                size="ms"
+                color="primary"
+                variant={view === value ? "filled-tonal" : "text"}
+                className={view === value ? "is-active" : ""}
+                aria-pressed={view === value}
+                onClick={() => chooseView(value)}
+              >
+                {label}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </header>
+      <section className="preview-stage" aria-label={`${pageConfigs[view].label} ${viewport} preview`}>
+        <div className="preview-frame" style={{ width: frameWidth * scale, height: frameHeight * scale }}>
+          <div className="preview-frame__scaled" style={{ width: frameWidth, height: frameHeight, transform: `scale(${scale})` }}>
+            <iframe
+              ref={iframeRef}
+              key={view}
+              title={`${pageConfigs[view].label} ${viewport} preview`}
+              src={previewUrl.toString()}
+              style={{ width: frameWidth, height: frameHeight }}
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export function App() {
+  const params = new URLSearchParams(window.location.search);
+  const preview = params.get("preview");
+  const view = pageConfigs[params.get("view")] ? params.get("view") : "templates";
+
+  if (preview === "card-states") return <CardStatesPreview />;
+  if (preview === "page-qa") return <ProductPage view={view} capturePage />;
+  if (params.get("embedded") === "1") return <ProductPage view={view} embedded />;
+  return <PreviewWorkbench />;
 }

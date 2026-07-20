@@ -1,8 +1,10 @@
-# TheBestPDF Templates — design handoff
+# TheBestPDF service pages — design handoff
 
-Standalone React implementation of the `Template page` frame from the Templates Library Figma file. The project is intentionally separate from `universe-forma/tbp-fe` and is designed for developer handoff.
+Standalone React implementation of the Templates, Invoice, and Forms desktop/mobile frames from the Templates Library Figma file. The project is intentionally separate from `universe-forma/tbp-fe` and is designed for developer handoff.
 
 - Figma source: [Templates Library — Template page](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=15-19695)
+- Forms source: [Templates Library — Forms](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=205-24460)
+- Invoice source: [Templates Library — Invoice](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=205-24595)
 - Live preview: [GitHub Pages](https://vladyslavbelkovets-ux.github.io/tbp-templates-design/)
 - Current reference screenshot: [`docs/figma-reference-current.png`](docs/figma-reference-current.png)
 - Card-state reference: [`docs/figma-card-states.png`](docs/figma-card-states.png)
@@ -22,7 +24,7 @@ npm run build
 npm run preview
 ```
 
-The isolated card-state comparison is available locally at `?preview=card-states`.
+Use the controls at the top of the live preview to switch between Mobile/Desktop and Invoice/Templates/Forms. The isolated card-state comparison is available locally at `?preview=card-states`.
 
 ## UI components
 
@@ -38,6 +40,8 @@ See [`.design-engineer-plugin/design/dev/design-system.md`](.design-engineer-plu
 - template and login actions
 - default and hover/focus card states
 - responsive mobile navigation
+- in-place Mobile/Desktop and Invoice/Templates/Forms preview switching
+- Forms-specific content, official form previews, FAQ, and legal state
 
 ## Template content
 
