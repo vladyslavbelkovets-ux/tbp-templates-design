@@ -8,14 +8,16 @@
 
 ## Corrections included
 
-- Restored the Figma typography with Outfit and preserved the approved radii.
+- Restored The Best PDF's project font, Inter, and removed the incorrect Outfit dependency.
+- Mapped radii to the resolved Figma variables: card 12 px, card content 16 px, mobile tab 8 px, icon button 4 px, alert 4 px, and DataGrid 16 px.
 - Matched desktop and mobile section boundaries to the Figma frames.
 - Kept 12 cards per desktop page and changed mobile pages to 6 cards.
 - Converted the desktop category sidebar into horizontally scrollable mobile tabs.
 - Replaced the mobile card button with the compact chevron action.
 - Top-aligned every document preview so the beginning of the document is visible.
 - Made pagination responsive and hidden when only one page exists.
-- Rebuilt the comparison table as stacked rows on mobile.
+- Rebuilt DataGrid node `72:20267` with its exact 906 × 388 px desktop geometry, 200 px first column, resolved typography, borders, and variable row heights.
+- Preserved the corresponding stacked mobile DataGrid at 343 × 486 px.
 - Matched the FAQ spacing, dividers, and transparent background.
 - Added the mobile footer accordion and aligned its open and collapsed states.
 
@@ -26,6 +28,8 @@
 - Responsive checks passed at 320, 375, 620, 621, 768, 1024, and 1440 px with no horizontal overflow.
 - All 56 templates have unique descriptions; none are missing.
 - Search collapses the catalog to one result and removes pagination when only one page remains.
+- Desktop DataGrid row heights match Figma exactly: 48, 76, 56, 76, 76, and 56 px.
+- Resolved font and radius variables match The Best PDF tokens on desktop and mobile.
 - Production build passes with no browser console errors.
 
 ## Result
