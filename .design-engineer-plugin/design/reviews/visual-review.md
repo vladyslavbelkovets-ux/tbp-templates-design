@@ -1,46 +1,45 @@
-# Visual review — Figma design update
+# Visual review — centered template catalog
 
-Authoritative design: Figma `Templates library`, node `15:19695`.
+Review source: the user's catalog reference screenshot, the existing implementation before commit `f041913`, and the current Figma-based page structure.
 
-Review method: Figma design context and full-node screenshot compared with the live local implementation at desktop `1440 × 900`, wide desktop `1920 × 1000`, and mobile `390 × 844`.
+Review method: live local implementation at wide desktop `1920 × 1000`, design desktop `1440 × 900`, and mobile `390 × 844`.
 
 ## Result
 
-Passed. No P0, P1, or P2 visual-fidelity issues remain in the updated page.
+Passed. The complete catalog is centered as one bounded block, and the previously approved font and corner geometry are restored.
 
-## Applied updates
+## Applied corrections
 
-### [P1] The lower page repeated an obsolete content block
+### [P1] The catalog expanded edge-to-edge on wide screens
 
-- **Expected:** one `906px` content column containing the contract introduction, inclusion table, five-row FAQ, and legal-information alert.
-- **Actual:** two variants of the same short contract text block were rendered back to back.
-- **Fix:** replaced both legacy blocks with the complete Figma structure and preserved semantic headings, table roles, accordion controls, and legal-information labeling.
+- **Expected:** categories and cards should remain one centered catalog surface, matching the supplied reference composition.
+- **Actual:** after the previous revision, the grid continued growing with the viewport and cards reached almost `500px` wide at `1920px`.
+- **Fix:** constrained the complete catalog to the `1440px` design canvas and centered it with automatic outer margins. The white panel remains `1376px` wide and its internal card grid still uses all available design width.
 
-### [P1] The template grid stopped expanding on wide screens
+### [P1] Typography changed from the approved implementation
 
-- **Expected:** the catalog panel and template list should use the available width after the `197px` category rail and `48px` gap.
-- **Actual:** the template list was capped at `1067px`, leaving unused space at wider viewport sizes.
-- **Fix:** changed the list track to `minmax(0, 1fr)` and removed the card-width cap so the full catalog surface expands fluidly.
+- **Expected:** Inter throughout the existing page.
+- **Actual:** the previous revision switched the project font to Outfit.
+- **Fix:** restored Inter as the primary font and removed the unused Outfit dependency and font files from the build.
 
-### [P2] Typography and component geometry reflected the previous design revision
+### [P2] Corner radii changed from the approved implementation
 
-- **Expected:** Outfit as the project font, Inter for the contract table, `16px` card corners, `12px` action-button corners, and the updated hero descriptor.
-- **Actual:** the page used Inter globally, smaller card/button radii, and the previous descriptor copy.
-- **Fix:** added local Outfit font assets, mapped the supporting Inter usage, updated the radii and shadow tokens, and matched the current Figma copy.
+- **Expected:** card `12px`, card action `4px`, search field `6px`, and login action `4px`.
+- **Actual:** the previous revision increased these values to `16px` and `12px`.
+- **Fix:** restored the earlier design tokens and component-specific radii.
 
 ## Verification evidence
 
-- Desktop geometry: hero `378px`, catalog panel `1376px` wide, template list `1067px`, cards `339.66px`, contract guide `1576px`, guide column `906px`, footer `887px`.
-- Contract-guide geometry: content `1416px`, inclusion section `554px`, table `464px`, FAQ `412px`, alert `76px`.
-- Wide desktop (`1920px`): catalog panel `1856px`, template list `1547px`, cards `499.66px`, no horizontal overflow.
-- Mobile (`390px`): catalog panel `366px`, cards `334px`, contract/table/FAQ/alert content `350px`, no horizontal overflow.
-- FAQ buttons expose `aria-expanded`, reveal their answers, and return to the collapsed Figma state.
-- All 22 images visible in the tested mobile state loaded successfully.
-- Single-page category regression: Receipts renders 8 cards with no pagination.
+- Wide desktop (`1920px`): complete catalog `1440px`, centered at `960px`; white panel from `272px` to `1648px`, centered at `960px`.
+- Design desktop (`1440px`): white panel from `32px` to `1408px`, centered at `720px`.
+- Mobile (`390px`): white panel from `12px` to `378px`, centered at `195px`.
+- Computed primary font: `Inter, sans-serif`.
+- Computed radii: card `12px`, card button `4px`, search `6px`, login `4px`.
+- No horizontal overflow at `1920px`, `1440px`, or `390px`.
+- Existing filtering, conditional pagination, responsive card count, table, FAQ, and legal alert remain intact.
 
 ## UX non-negotiables
 
-- The active category, page title, and primary card action remain visually clear.
-- Filtering, search, conditional pagination, hover/focus states, and FAQ disclosure use conventional interactions.
-- The contract comparison data is represented as a table, and the legal disclaimer is exposed as a labeled complementary region.
-- The implementation remains keyboard-operable and does not rely on imagery alone.
+- Categories and cards read as one grouped catalog instead of two disconnected regions.
+- The primary `Use template` action remains consistent across all cards.
+- Active category, filtering, search, pagination, and FAQ disclosure retain conventional interaction and visible focus behavior.

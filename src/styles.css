@@ -1,5 +1,5 @@
 :root {
-  --font-primary: "Outfit", sans-serif;
+  --font-primary: "Inter", sans-serif;
   --font-supporting: "Inter", sans-serif;
   --color-primary: #1f5de2;
   --color-primary-dark: #263dae;
@@ -11,13 +11,13 @@
   --color-button-outline: #cbd7e6;
   --color-page: #f5f7ff;
   --color-divider: rgba(0, 0, 0, 0.12);
-  --radius-card: 16px;
+  --radius-card: 12px;
   --radius-card-preview: 12px;
-  --radius-button-ms: 12px;
+  --radius-button-ms: 4px;
   --space-card-default: 24px;
   --space-card-hover: 16px;
   --shadow-card-hover: 0 6px 12px -2px rgba(0, 0, 0, 0.08), 0 8px 40px rgba(0, 0, 0, 0.08);
-  --shadow-document: 0 4px 5px rgba(91, 91, 91, 0.16);
+  --shadow-document: 0 4px 10px rgba(91, 91, 91, 0.16);
   color: var(--color-text-primary);
   font-family: var(--font-primary);
   font-synthesis: none;
@@ -158,7 +158,7 @@ a { color: inherit; text-decoration: none; }
   height: 41.21%;
 }
 
-.login-button { width: 127px; height: 48px; border-radius: 12px; }
+.login-button { width: 127px; height: 48px; }
 
 .mobile-menu-button,
 .mobile-nav { display: none; }
@@ -211,21 +211,23 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
 }
 
-.hero-search .ui-input__container { padding-inline: 12px; border-radius: 12px; }
+.hero-search .ui-input__container { padding-inline: 12px; }
 .hero-search .ui-input__side { opacity: 0.8; }
 .hero-search .ui-input__control::-webkit-search-cancel-button { appearance: none; }
 
 .catalog {
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   padding: 0 32px;
   background: var(--color-page);
 }
 
 .catalog__panel {
   display: grid;
-  grid-template-columns: 197px minmax(0, 1fr);
+  grid-template-columns: 197px minmax(0, 1067px);
   align-items: start;
-  justify-content: stretch;
+  justify-content: center;
   gap: 48px;
   width: 100%;
   padding: 32px;
