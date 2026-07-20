@@ -13,6 +13,8 @@
 - Matched desktop and mobile section boundaries to the Figma frames.
 - Kept 12 cards per desktop page and changed mobile pages to 6 cards.
 - Converted the desktop category sidebar into horizontally scrollable mobile tabs.
+- Added the Figma mobile search state (`72:30766`): category filters are removed while searching and the catalog height follows the result count.
+- Mobile search ignores the previously selected category so hidden filters cannot silently limit results.
 - Replaced the mobile card button with the compact chevron action.
 - Top-aligned every document preview so the beginning of the document is visible.
 - Made pagination responsive and hidden when only one page exists.
@@ -28,6 +30,7 @@
 - Responsive checks passed at 320, 375, 620, 621, 768, 1024, and 1440 px with no horizontal overflow.
 - All 56 templates have unique descriptions; none are missing.
 - Search collapses the catalog to one result and removes pagination when only one page remains.
+- A three-result mobile search produces the exact 776 px catalog section with no filters or pagination.
 - Desktop DataGrid row heights match Figma exactly: 48, 76, 56, 76, 76, and 56 px.
 - Resolved font and radius variables match The Best PDF tokens on desktop and mobile.
 - Production build passes with no browser console errors.

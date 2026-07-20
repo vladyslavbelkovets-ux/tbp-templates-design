@@ -264,15 +264,18 @@ function Catalog({ query, onQueryChange, onMessage }) {
   const [page, setPage] = useState(1);
   const isMobile = useMediaQuery("(max-width: 620px)");
   const pageSize = isMobile ? 6 : templatesPerPage;
+  const isMobileSearch = isMobile && query.trim().length > 0;
   const filteredTemplates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     return templates.filter((template) => {
-      const matchesCategory = activeCategory === categories[0] || template.category === activeCategory;
+      const matchesCategory = isMobileSearch
+        || activeCategory === categories[0]
+        || template.category === activeCategory;
       const matchesQuery = !normalizedQuery
         || `${template.title} ${template.category} ${template.description}`.toLowerCase().includes(normalizedQuery);
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [activeCategory, isMobileSearch, query]);
 
   const pageCount = Math.max(1, Math.ceil(filteredTemplates.length / pageSize));
   const currentPage = Math.min(page, pageCount);
@@ -292,24 +295,26 @@ function Catalog({ query, onQueryChange, onMessage }) {
   };
 
   return (
-    <main className="catalog" id="templates">
+    <main className={`catalog${isMobileSearch ? " catalog--mobile-search" : ""}`} id="templates">
       <section className="catalog__panel">
-        <aside className="categories" aria-label="Template categories">
-          <h2>Categories</h2>
-          <div className="categories__list">
-            {categories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                className={activeCategory === category ? "is-active" : ""}
-                aria-pressed={activeCategory === category}
-                onClick={() => chooseCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </aside>
+        {!isMobileSearch ? (
+          <aside className="categories" aria-label="Template categories">
+            <h2>Categories</h2>
+            <div className="categories__list">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  className={activeCategory === category ? "is-active" : ""}
+                  aria-pressed={activeCategory === category}
+                  onClick={() => chooseCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </aside>
+        ) : null}
         <div className="template-list">
           {visibleTemplates.length ? (
             <div className="template-grid">
