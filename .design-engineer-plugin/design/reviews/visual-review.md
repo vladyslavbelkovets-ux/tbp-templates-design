@@ -1,45 +1,33 @@
-# Visual review — centered template catalog
+# Visual review — Templates Library
 
-Review source: the user's catalog reference screenshot, the existing implementation before commit `f041913`, and the current Figma-based page structure.
+## Scope
 
-Review method: live local implementation at wide desktop `1920 × 1000`, design desktop `1440 × 900`, and mobile `390 × 844`.
+- Desktop reference: Figma node `15:19695` at 1440 px.
+- Mobile reference: Figma node `39:11153` at 375 px.
+- Reviewed the hero, template catalog, contract guide, FAQ, footer, interactive states, and responsive transitions.
+
+## Corrections included
+
+- Restored the Figma typography with Outfit and preserved the approved radii.
+- Matched desktop and mobile section boundaries to the Figma frames.
+- Kept 12 cards per desktop page and changed mobile pages to 6 cards.
+- Converted the desktop category sidebar into horizontally scrollable mobile tabs.
+- Replaced the mobile card button with the compact chevron action.
+- Top-aligned every document preview so the beginning of the document is visible.
+- Made pagination responsive and hidden when only one page exists.
+- Rebuilt the comparison table as stacked rows on mobile.
+- Matched the FAQ spacing, dividers, and transparent background.
+- Added the mobile footer accordion and aligned its open and collapsed states.
+
+## Verification
+
+- Desktop sections: hero 378 px, catalog 1632 px, content 1472 px, footer 887 px.
+- Mobile sections: hero 290 px, catalog 1634 px, content 1748 px, footer 1696 px.
+- Responsive checks passed at 320, 375, 620, 621, 768, 1024, and 1440 px with no horizontal overflow.
+- All 56 templates have unique descriptions; none are missing.
+- Search collapses the catalog to one result and removes pagination when only one page remains.
+- Production build passes with no browser console errors.
 
 ## Result
 
-Passed. The complete catalog is centered as one bounded block, and the previously approved font and corner geometry are restored.
-
-## Applied corrections
-
-### [P1] The catalog expanded edge-to-edge on wide screens
-
-- **Expected:** categories and cards should remain one centered catalog surface, matching the supplied reference composition.
-- **Actual:** after the previous revision, the grid continued growing with the viewport and cards reached almost `500px` wide at `1920px`.
-- **Fix:** constrained the complete catalog to the `1440px` design canvas and centered it with automatic outer margins. The white panel remains `1376px` wide and its internal card grid still uses all available design width.
-
-### [P1] Typography changed from the approved implementation
-
-- **Expected:** Inter throughout the existing page.
-- **Actual:** the previous revision switched the project font to Outfit.
-- **Fix:** restored Inter as the primary font and removed the unused Outfit dependency and font files from the build.
-
-### [P2] Corner radii changed from the approved implementation
-
-- **Expected:** card `12px`, card action `4px`, search field `6px`, and login action `4px`.
-- **Actual:** the previous revision increased these values to `16px` and `12px`.
-- **Fix:** restored the earlier design tokens and component-specific radii.
-
-## Verification evidence
-
-- Wide desktop (`1920px`): complete catalog `1440px`, centered at `960px`; white panel from `272px` to `1648px`, centered at `960px`.
-- Design desktop (`1440px`): white panel from `32px` to `1408px`, centered at `720px`.
-- Mobile (`390px`): white panel from `12px` to `378px`, centered at `195px`.
-- Computed primary font: `Inter, sans-serif`.
-- Computed radii: card `12px`, card button `4px`, search `6px`, login `4px`.
-- No horizontal overflow at `1920px`, `1440px`, or `390px`.
-- Existing filtering, conditional pagination, responsive card count, table, FAQ, and legal alert remain intact.
-
-## UX non-negotiables
-
-- Categories and cards read as one grouped catalog instead of two disconnected regions.
-- The primary `Use template` action remains consistent across all cards.
-- Active category, filtering, search, pagination, and FAQ disclosure retain conventional interaction and visible focus behavior.
+No unresolved critical or major visual issues remain in the reviewed scope.

@@ -5,6 +5,20 @@ import { categories, templates, templatesPerPage } from "./templateData";
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
+}
+
 const footerColumns = [
   {
     title: "Edit PDF",
@@ -144,7 +158,8 @@ function Hero({ query, onQueryChange, onMessage }) {
           <h1>
             Ready-to-use <span>document templates</span>
           </h1>
-          <p>Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.</p>
+          <p className="hero__tagline hero__tagline--desktop">Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.</p>
+          <p className="hero__tagline hero__tagline--mobile">Browse 10,000+ free templates. Customize and download in minutes.</p>
         </div>
         <Input
           id="template-search"
@@ -185,6 +200,14 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
         >
           Use template
         </Button>
+        <button
+          className="template-card__chevron"
+          type="button"
+          aria-label={`Use ${template.title}`}
+          onClick={() => onUse(template)}
+        >
+          <CaretRight size={24} />
+        </button>
       </div>
     </article>
   );
@@ -204,17 +227,9 @@ function CardStatesPreview() {
 function Pagination({ page, pageCount, onPageChange }) {
   const pages = useMemo(() => {
     if (pageCount <= 7) return Array.from({ length: pageCount }, (_, index) => index + 1);
-
-    const visiblePages = [1];
-    const rangeStart = Math.max(2, page - 1);
-    const rangeEnd = Math.min(pageCount - 1, page + 1);
-
-    if (rangeStart > 2) visiblePages.push("start-ellipsis");
-    for (let pageNumber = rangeStart; pageNumber <= rangeEnd; pageNumber += 1) visiblePages.push(pageNumber);
-    if (rangeEnd < pageCount - 1) visiblePages.push("end-ellipsis");
-    visiblePages.push(pageCount);
-
-    return visiblePages;
+    if (page <= 3) return [1, 2, 3, "end-ellipsis", pageCount - 2, pageCount - 1, pageCount];
+    if (page >= pageCount - 2) return [1, 2, 3, "start-ellipsis", pageCount - 2, pageCount - 1, pageCount];
+    return [1, "start-ellipsis", page - 1, page, page + 1, "end-ellipsis", pageCount];
   }, [page, pageCount]);
 
   return (
@@ -247,6 +262,8 @@ function Pagination({ page, pageCount, onPageChange }) {
 function Catalog({ query, onQueryChange, onMessage }) {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [page, setPage] = useState(1);
+  const isMobile = useMediaQuery("(max-width: 620px)");
+  const pageSize = isMobile ? 6 : templatesPerPage;
   const filteredTemplates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     return templates.filter((template) => {
@@ -257,16 +274,16 @@ function Catalog({ query, onQueryChange, onMessage }) {
     });
   }, [activeCategory, query]);
 
-  const pageCount = Math.max(1, Math.ceil(filteredTemplates.length / templatesPerPage));
+  const pageCount = Math.max(1, Math.ceil(filteredTemplates.length / pageSize));
   const currentPage = Math.min(page, pageCount);
   const visibleTemplates = useMemo(() => {
-    const firstTemplate = (currentPage - 1) * templatesPerPage;
-    return filteredTemplates.slice(firstTemplate, firstTemplate + templatesPerPage);
-  }, [currentPage, filteredTemplates]);
+    const firstTemplate = (currentPage - 1) * pageSize;
+    return filteredTemplates.slice(firstTemplate, firstTemplate + pageSize);
+  }, [currentPage, filteredTemplates, pageSize]);
 
   useEffect(() => {
     setPage(1);
-  }, [activeCategory, query]);
+  }, [activeCategory, pageSize, query]);
 
   const chooseCategory = (category) => {
     setActiveCategory(category);
@@ -425,15 +442,27 @@ function ContractGuide() {
 }
 
 function Footer() {
+  const [openColumn, setOpenColumn] = useState(0);
+  const compactHiddenLinks = new Set(["Merge Images", "Compress Images", "Remove Watermark"]);
+
   return (
     <footer className="footer">
       <div className="footer__top">
-        {footerColumns.map((column) => (
-          <section className="footer__tool-column" key={column.title}>
-            <h2>{column.title}</h2>
+        {footerColumns.map((column, columnIndex) => (
+          <section className={`footer__tool-column${openColumn === columnIndex ? " is-open" : ""}`} key={column.title}>
+            <h2>
+              <button
+                type="button"
+                aria-expanded={openColumn === columnIndex}
+                onClick={() => setOpenColumn(openColumn === columnIndex ? -1 : columnIndex)}
+              >
+                <span>{column.title}</span>
+                <CaretDown className="footer__tool-chevron" size={18} />
+              </button>
+            </h2>
             <ul>
               {column.links.map((link) => (
-                <li key={link}><a href="#top">{link}</a></li>
+                <li className={compactHiddenLinks.has(link) ? "mobile-only-hidden" : ""} key={link}><a href="#top">{link}</a></li>
               ))}
             </ul>
           </section>
@@ -447,7 +476,7 @@ function Footer() {
               <h2><img src={asset(column.icon)} alt="" />{column.title}</h2>
               <ul>
                 {column.links.map((link, index) => (
-                  <li key={link}>
+                  <li className={link === "Cookie Policy" ? "mobile-only-hidden" : ""} key={link}>
                     <a href="#top">
                       {link}
                       {column.title === "Languages" && index === 0 ? <img className="language-chevron" src={asset("chevron-down.svg")} alt="" /> : null}
