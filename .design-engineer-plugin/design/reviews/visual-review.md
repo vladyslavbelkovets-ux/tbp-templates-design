@@ -17,6 +17,7 @@
 - Mobile search ignores the previously selected category so hidden filters cannot silently limit results.
 - Replaced the mobile card button with the compact chevron action.
 - Synchronized the desktop `Use template` hover treatment with the card hover/focus state, using Figma's 8% action overlay.
+- Expanded the template action across the entire card while keeping the existing desktop button and mobile chevron as keyboard-accessible controls.
 - Top-aligned every document preview so the beginning of the document is visible.
 - Made pagination responsive and hidden when only one page exists.
 - Rebuilt DataGrid node `72:20267` with its exact 906 × 388 px desktop geometry, 200 px first column, resolved typography, borders, and variable row heights.
@@ -35,6 +36,7 @@
 - Desktop DataGrid row heights match Figma exactly: 48, 76, 56, 76, 76, and 56 px.
 - Resolved font and radius variables match The Best PDF tokens on desktop and mobile.
 - Hovering or focusing any desktop card also applies the approved hover state to its `Use template` button; the mobile chevron state is unchanged.
+- Clicking the preview, title, description, desktop CTA, or mobile card area triggers the same template action once.
 - Production build passes with no browser console errors.
 
 ## Result

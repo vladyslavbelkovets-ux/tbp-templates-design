@@ -180,7 +180,10 @@ function Hero({ query, onQueryChange, onMessage }) {
 
 function TemplateCard({ template, onUse, state = "interactive" }) {
   return (
-    <article className={`template-card${state === "hover" ? " template-card--hover" : ""}`}>
+    <article
+      className={`template-card${state === "hover" ? " template-card--hover" : ""}`}
+      onClick={() => onUse(template)}
+    >
       <div className="template-card__dock">
         <div className="template-card__preview">
           <img src={asset(template.preview)} alt={`${template.title} preview`} />
@@ -196,7 +199,6 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
           color="action"
           size="ms"
           className="template-card__button"
-          onClick={() => onUse(template)}
         >
           Use template
         </Button>
@@ -204,7 +206,6 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
           className="template-card__chevron"
           type="button"
           aria-label={`Use ${template.title}`}
-          onClick={() => onUse(template)}
         >
           <CaretRight size={24} />
         </button>
