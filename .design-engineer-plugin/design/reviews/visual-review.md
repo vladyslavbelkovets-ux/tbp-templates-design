@@ -24,6 +24,8 @@
 - Preserved the corresponding stacked mobile DataGrid at 343 × 486 px.
 - Matched the FAQ spacing, dividers, and transparent background.
 - Added the mobile footer accordion and aligned its open and collapsed states.
+- Replaced the local two-component `vendor/ui-pes` copy with the published `@universe-forma/ui-pes@0.5.45` package.
+- Routed every button, icon button, and input through UI-PES while preserving The Best PDF typography and radii.
 
 ## Verification
 
@@ -38,6 +40,8 @@
 - Hovering or focusing any desktop card also applies the approved hover state to its `Use template` button; the mobile chevron state is unchanged.
 - Clicking the preview, title, description, desktop CTA, or mobile card area triggers the same template action once.
 - Production build passes with no browser console errors.
+- All 51 rendered buttons and the search input use UI-PES primitives in the production bundle.
+- `npm audit` reports zero known vulnerabilities.
 
 ## Result
 

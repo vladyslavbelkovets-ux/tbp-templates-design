@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@import "../node_modules/@universe-forma/ui-pes/es/theme.css";
+@source "../node_modules/@universe-forma/ui-pes/es";
+
 :root {
   --font-primary: "Inter", sans-serif;
   --font-supporting: "Inter", sans-serif;
@@ -12,6 +16,57 @@
   --color-page: #f5f7ff;
   --color-divider: rgba(0, 0, 0, 0.12);
   --color-action-hover: rgba(0, 0, 0, 0.08);
+  --color-action-active: rgba(0, 0, 0, 0.6);
+  --color-action-stroke: rgba(0, 0, 0, 0.15);
+  --color-action-8: rgba(0, 0, 0, 0.08);
+  --color-action-12: rgba(0, 0, 0, 0.12);
+  --color-primary-opacity-12: rgba(31, 93, 226, 0.12);
+  --color-primary-opacity-16: rgba(31, 93, 226, 0.16);
+  --color-state-primary-50: rgba(31, 93, 226, 0.5);
+  --color-common-black: #000;
+  --color-common-white: #fff;
+  --color-os-outline-border: var(--color-outline);
+  --color-os-button-outline-action-border: var(--color-button-outline);
+  --spacing-btn-lg-vertical-padding: 16px;
+  --spacing-btn-lg-horizontal-padding: 24px;
+  --radius-btn-lg: 4px;
+  --text-button-lg-size: 16px;
+  --text-button-lg--line-height: 22px;
+  --text-button-lg--font-weight: 700;
+  --spacing-btn-md-vertical-padding: 12px;
+  --spacing-btn-md-horizontal-padding: 20px;
+  --radius-btn-md: 4px;
+  --text-button-md-size: 14px;
+  --text-button-md--line-height: 18px;
+  --text-button-md--font-weight: 500;
+  --spacing-btn-ms-vertical-padding: 8px;
+  --spacing-btn-ms-horizontal-padding: 16px;
+  --radius-btn-ms: 4px;
+  --spacing-btn-sm-vertical-padding: 6px;
+  --spacing-btn-sm-horizontal-padding: 10px;
+  --radius-btn-sm: 2px;
+  --text-button-sm-size: 14px;
+  --text-button-sm--line-height: 18px;
+  --text-button-sm--font-weight: 500;
+  --btn-outlined-border-width: 1px;
+  --spacing-icon-btn-lg-vertical-padding: 16px;
+  --spacing-icon-btn-lg-horizontal-padding: 16px;
+  --radius-icon-btn-lg: 4px;
+  --spacing-icon-btn-md-vertical-padding: 12px;
+  --spacing-icon-btn-md-horizontal-padding: 12px;
+  --radius-icon-btn-md: 4px;
+  --spacing-icon-btn-ms-vertical-padding: 8px;
+  --spacing-icon-btn-ms-horizontal-padding: 8px;
+  --radius-icon-btn-ms: 4px;
+  --spacing-icon-btn-sm-vertical-padding: 6px;
+  --spacing-icon-btn-sm-horizontal-padding: 6px;
+  --radius-icon-btn-sm: 2px;
+  --spacing-icon-btn-xs-vertical-padding: 3px;
+  --spacing-icon-btn-xs-horizontal-padding: 3px;
+  --radius-icon-btn-xs: 2px;
+  --icon-btn-outlined-border-width: 1px;
+  --spacing-input-lg-horizontal-padding: 12px;
+  --radius-lg-input: 6px;
   --radius-card: 12px;
   --radius-card-preview: 12px;
   --radius-button-ms: 4px;
@@ -41,9 +96,6 @@ body {
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
 }
-
-button,
-input { font: inherit; }
 
 button,
 a { -webkit-tap-highlight-color: transparent; }
@@ -225,9 +277,9 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
 }
 
-.hero-search .ui-input__container { padding-inline: 12px; }
-.hero-search .ui-input__side { opacity: 0.8; }
-.hero-search .ui-input__control::-webkit-search-cancel-button { appearance: none; }
+.hero-search__container { padding-inline: 12px; }
+.hero-search svg { opacity: 0.8; }
+.hero-search__control::-webkit-search-cancel-button { appearance: none; }
 
 .catalog {
   width: 100%;
@@ -273,6 +325,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .categories__list button {
+  justify-content: flex-start;
   width: 100%;
   max-height: 66px;
   padding: 0;
@@ -418,10 +471,10 @@ a { color: inherit; text-decoration: none; }
   line-height: 18px;
 }
 
-.template-card:hover .template-card__button.ui-button--outlined.ui-button--action,
-.template-card:focus-within .template-card__button.ui-button--outlined.ui-button--action,
-.template-card--hover .template-card__button.ui-button--outlined.ui-button--action,
-.template-card__button.ui-button--outlined.ui-button--action:hover {
+.template-card:hover .template-card__button,
+.template-card:focus-within .template-card__button,
+.template-card--hover .template-card__button,
+.template-card__button:hover {
   background: var(--color-action-hover);
 }
 
@@ -456,6 +509,8 @@ a { color: inherit; text-decoration: none; }
 
 .empty-state h2,
 .empty-state p { margin: 0; }
+
+.empty-state > button { min-height: 48px; }
 
 .pagination {
   display: flex;

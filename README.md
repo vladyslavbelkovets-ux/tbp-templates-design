@@ -26,13 +26,15 @@ The isolated card-state comparison is available locally at `?preview=card-states
 
 ## UI components
 
-The page uses the `Button` and `Input` APIs from `@universe-forma/ui-pes`. Because the original GitHub Package requires private package access, the exact components needed by this handoff are vendored under `vendor/ui-pes` and installed through a local file dependency. No credentials are stored in the repository.
+The page imports `Button`, `IconButton`, and `Input` from the published `@universe-forma/ui-pes` package. The project `.npmrc` points the `@universe-forma` scope to GitHub Packages; installing dependencies requires an account or token with access to that package. No credentials are stored in the repository.
+
+See [`.design-engineer-plugin/design/dev/design-system.md`](.design-engineer-plugin/design/dev/design-system.md) for the component mapping and styling rules.
 
 ## Interaction coverage
 
 - template search and empty state across 56 real templates
 - category filtering across seven filename-derived categories
-- dynamic 12-card pagination
+- dynamic pagination with 12 desktop cards or 6 mobile cards per page
 - template and login actions
 - default and hover/focus card states
 - responsive mobile navigation

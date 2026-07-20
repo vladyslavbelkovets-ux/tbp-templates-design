@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { CaretDown, CaretLeft, CaretRight, Info, List, MagnifyingGlass, X } from "@phosphor-icons/react";
-import { Button, Input } from "@universe-forma/ui-pes";
+import { Button, IconButton, Input } from "@universe-forma/ui-pes";
 import { categories, templates, templatesPerPage } from "./templateData";
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
@@ -118,16 +118,19 @@ function Header({ onMessage }) {
         >
           Log in
         </Button>
-        <button
+        <IconButton
           className="mobile-menu-button"
           type="button"
+          variant="outlined"
+          color="primary"
+          size="ms"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close navigation" : "Open navigation"}
           onClick={() => setOpen((value) => !value)}
         >
           {open ? <X size={24} /> : <List size={24} />}
-        </button>
+        </IconButton>
       </div>
       {open ? (
         <nav className="mobile-nav" id="mobile-menu" aria-label="Mobile navigation">
@@ -171,6 +174,8 @@ function Hero({ query, onQueryChange, onMessage }) {
           placeholder="Search templates…"
           aria-label="Search templates"
           rootClassName="hero-search"
+          containerClassName="hero-search__container"
+          className="hero-search__control"
           leftIcon={<MagnifyingGlass size={24} weight="regular" />}
         />
       </div>
@@ -202,13 +207,16 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
         >
           Use template
         </Button>
-        <button
+        <IconButton
           className="template-card__chevron"
           type="button"
+          variant="text"
+          color="action"
+          size="xs"
           aria-label={`Use ${template.title}`}
         >
           <CaretRight size={24} />
-        </button>
+        </IconButton>
       </div>
     </article>
   );
@@ -235,14 +243,17 @@ function Pagination({ page, pageCount, onPageChange }) {
 
   return (
     <nav className="pagination" aria-label="Template pages">
-      <button type="button" aria-label="Previous page" disabled={page === 1} onClick={() => onPageChange(Math.max(1, page - 1))}>
+      <IconButton variant="text" color="action" size="xs" type="button" aria-label="Previous page" disabled={page === 1} onClick={() => onPageChange(Math.max(1, page - 1))}>
         <CaretLeft size={18} weight="bold" />
-      </button>
+      </IconButton>
       {pages.map((item) =>
         typeof item === "string" ? (
           <span key={item} className="pagination__ellipsis">…</span>
         ) : (
-          <button
+          <Button
+            variant="text"
+            color="action"
+            size="sm"
             type="button"
             key={item}
             className={page === item ? "is-active" : ""}
@@ -250,12 +261,12 @@ function Pagination({ page, pageCount, onPageChange }) {
             onClick={() => onPageChange(item)}
           >
             {item}
-          </button>
+          </Button>
         ),
       )}
-      <button type="button" aria-label="Next page" disabled={page === pageCount} onClick={() => onPageChange(Math.min(pageCount, page + 1))}>
+      <IconButton variant="text" color="action" size="xs" type="button" aria-label="Next page" disabled={page === pageCount} onClick={() => onPageChange(Math.min(pageCount, page + 1))}>
         <CaretRight size={18} weight="bold" />
-      </button>
+      </IconButton>
     </nav>
   );
 }
@@ -303,7 +314,10 @@ function Catalog({ query, onQueryChange, onMessage }) {
             <h2>Categories</h2>
             <div className="categories__list">
               {categories.map((category) => (
-                <button
+                <Button
+                  variant="text"
+                  color="action"
+                  size="ms"
                   key={category}
                   type="button"
                   className={activeCategory === category ? "is-active" : ""}
@@ -311,7 +325,7 @@ function Catalog({ query, onQueryChange, onMessage }) {
                   onClick={() => chooseCategory(category)}
                 >
                   {category}
-                </button>
+                </Button>
               ))}
             </div>
           </aside>
@@ -420,7 +434,10 @@ function ContractGuide() {
 
                 return (
                   <div className={`faq__item${isOpen ? " is-open" : ""}`} key={item.question}>
-                    <button
+                    <Button
+                      variant="text"
+                      color="action"
+                      size="md"
                       type="button"
                       aria-expanded={isOpen}
                       aria-controls={panelId}
@@ -428,7 +445,7 @@ function ContractGuide() {
                     >
                       <span>{item.question}</span>
                       <span className="faq__icon" aria-hidden="true"><CaretDown size={24} /></span>
-                    </button>
+                    </Button>
                     <div className="faq__answer" id={panelId} hidden={!isOpen}>
                       <p>{item.answer}</p>
                     </div>
@@ -457,14 +474,17 @@ function Footer() {
         {footerColumns.map((column, columnIndex) => (
           <section className={`footer__tool-column${openColumn === columnIndex ? " is-open" : ""}`} key={column.title}>
             <h2>
-              <button
+              <Button
+                variant="text"
+                color="action"
+                size="ms"
                 type="button"
                 aria-expanded={openColumn === columnIndex}
                 onClick={() => setOpenColumn(openColumn === columnIndex ? -1 : columnIndex)}
               >
                 <span>{column.title}</span>
                 <CaretDown className="footer__tool-chevron" size={18} />
-              </button>
+              </Button>
             </h2>
             <ul>
               {column.links.map((link) => (
