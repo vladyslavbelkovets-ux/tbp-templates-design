@@ -10,9 +10,12 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 | Single-page results | Yes | Yes | Catalog height follows the visible cards; pagination is hidden. |
 | Search results | Covered | Yes | Mobile search hides category tabs and pagination. |
 | Empty results | Yes | Yes | “Clear search” resets the query and returns to page 1. |
+| Loading | Yes | Yes | Card placeholders preserve the final grid footprint and prevent layout shift. |
 | Card default | Yes | Yes | Preview starts at the top of the document. |
 | Card hover / focus | Yes | N/A | Reuse hover styling for keyboard focus; touch uses the default state. |
-| Loading / error | N/A | N/A | Current catalog uses local static data and images. Add these states only if the data source becomes remote. |
+| Forms category | Yes | Yes | Desktop and mobile use the dedicated forms preview library. |
+| Invoices category | Yes | Yes | Desktop and mobile are documented as a responsive pair. |
+| Error | N/A | N/A | Add an error state when the catalog is connected to a remote data source. |
 
 ## Behavior rules
 
@@ -27,4 +30,5 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 
 - Canonical titles, categories, descriptions, and runtime paths: [`src/templateData.js`](../src/templateData.js)
 - Developer preview library and manifest: [`handoff/template-previews`](template-previews/README.md)
+- Forms preview library and manifest: [`handoff/form-previews`](form-previews/README.md)
 - Runtime preview assets: [`public/assets/template-previews`](../public/assets/template-previews/)

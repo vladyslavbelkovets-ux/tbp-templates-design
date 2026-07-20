@@ -1,0 +1,13 @@
+category,form,description,preview_path
+"Tax","Form W-9","Request a taxpayer identification number and certification.","handoff/form-previews/tax/Form W-9.png"
+"Tax","Form W-4","Set an employee’s federal income tax withholding.","handoff/form-previews/tax/Form W-4.png"
+"Tax","Form 1099-NEC","Report nonemployee compensation paid during the year.","handoff/form-previews/tax/Form 1099-NEC.png"
+"Tax","Form W-2","Report employee wages and taxes withheld.","handoff/form-previews/tax/Form W-2.png"
+"Tax","Form 1040-ES","Calculate and pay estimated individual income tax.","handoff/form-previews/tax/Form 1040-ES.png"
+"Tax","Form 941","Report quarterly federal payroll taxes.","handoff/form-previews/tax/Form 941.png"
+"Tax","Schedule C (Form 1040)","Report profit or loss from a sole proprietorship.","handoff/form-previews/tax/Schedule C (Form 1040).png"
+"Immigration","Form I-9","Verify employee identity and work authorization.","handoff/form-previews/immigration/Form I-9.png"
+"Immigration","Form I-864","Sponsor an immigrant with an affidavit of support.","handoff/form-previews/immigration/Form I-864.png"
+"Passport & Travel","Form DS-11","Apply for a first-time or replacement U.S. passport.","handoff/form-previews/passport-travel/Form DS-11.png"
+"Passport & Travel","Form DS-82","Renew an eligible U.S. passport by mail.","handoff/form-previews/passport-travel/Form DS-82.png"
+"Healthcare","Form CMS-1500","Submit professional healthcare insurance claims.","handoff/form-previews/healthcare/Form CMS-1500.png"
