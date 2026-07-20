@@ -1,74 +1,46 @@
-# Visual review — populated, auto-sizing template catalog
+# Visual review — Figma design update
 
-Review method: live local URL in the in-app browser at desktop `1440 × 900` and mobile `390 × 844`.
+Authoritative design: Figma `Templates library`, node `15:19695`.
+
+Review method: Figma design context and full-node screenshot compared with the live local implementation at desktop `1440 × 900`, wide desktop `1920 × 1000`, and mobile `390 × 844`.
 
 ## Result
 
-Passed. No P0, P1, or P2 issues remain in the populated catalog.
+Passed. No P0, P1, or P2 visual-fidelity issues remain in the updated page.
 
-## Scope
+## Applied updates
 
-- 56 user-provided PNG previews and their filename-derived template names.
-- Seven categories plus the combined `All templates` view.
-- Category filtering, search, conditional pagination, auto-sizing catalog height, image loading, card layout, and responsive behavior.
+### [P1] The lower page repeated an obsolete content block
 
-## Findings and applied fixes
+- **Expected:** one `906px` content column containing the contract introduction, inclusion table, five-row FAQ, and legal-information alert.
+- **Actual:** two variants of the same short contract text block were rendered back to back.
+- **Fix:** replaced both legacy blocks with the complete Figma structure and preserved semantic headings, table roles, accordion controls, and legal-information labeling.
 
-### [P1] Catalog still used placeholder content
+### [P1] The template grid stopped expanding on wide screens
 
-- **Before:** all 12 cards repeated `Product Order template` and one shared placeholder preview.
-- **Expected:** each source file should render as its own card with the filename-derived category and title.
-- **Fix:** created `src/templateData.js`, copied all 56 source previews to `public/assets/template-previews/`, and bound every card to its own title, category, preview, and descriptive alt text.
+- **Expected:** the catalog panel and template list should use the available width after the `197px` category rail and `48px` gap.
+- **Actual:** the template list was capped at `1067px`, leaving unused space at wider viewport sizes.
+- **Fix:** changed the list track to `minmax(0, 1fr)` and removed the card-width cap so the full catalog surface expands fluidly.
 
-### [P1] Category controls did not filter the cards
+### [P2] Typography and component geometry reflected the previous design revision
 
-- **Before:** category buttons only changed their active color.
-- **Expected:** each category should show only its assigned templates.
-- **Fix:** applied the active category before search and pagination; category selection and a new search both reset to page 1.
-
-### [P2] Pagination was static
-
-- **Before:** pagination always showed the mock sequence ending at page 10 and did not change the card slice.
-- **Expected:** page count and cards should reflect the filtered result set.
-- **Fix:** added 12-card pagination with dynamic page counts and compact ellipsis handling for larger datasets.
-
-### [P1] Catalog height did not follow the visible card count
-
-- **Before:** the desktop catalog reserved four card rows even when a category contained only two, five, or eight templates.
-- **Expected:** the white catalog panel should end after the final visible row, while preserving the designed gaps and card height.
-- **Fix:** removed fixed catalog, panel, list, and grid heights; the grid now creates only the required `356px` rows.
-
-### [P2] Single-page categories still showed a page selector
-
-- **Before:** every non-empty result rendered pagination, including categories with only one page.
-- **Expected:** pagination should appear only when there is another page to navigate to.
-- **Fix:** the selector now renders only when the filtered result has more than one page.
-
-### [P2] Portrait previews were vertically cropped at the title
-
-- **Before:** the legacy shared preview used a negative top offset.
-- **Expected:** the user-provided `1200 × 1553` documents should show their identifying headings.
-- **Fix:** anchored previews at the top of the existing Figma card frame without altering the card geometry or hover/focus states.
+- **Expected:** Outfit as the project font, Inter for the contract table, `16px` card corners, `12px` action-button corners, and the updated hero descriptor.
+- **Actual:** the page used Inter globally, smaller card/button radii, and the previous descriptor copy.
+- **Fix:** added local Outfit font assets, mapped the supporting Inter usage, updated the radii and shadow tokens, and matched the current Figma copy.
 
 ## Verification evidence
 
-- Desktop screenshot: `qa/catalog-content-1440.jpg`.
-- Mobile screenshot: `qa/catalog-content-mobile.jpg`.
-- All 56 configured preview paths exist; no missing assets.
-- All 12 previews on the initial desktop page loaded at natural size `1200 × 1553`.
-- `All templates`: 5 pages (`12 + 12 + 12 + 12 + 8`).
-- `Contracts`: 2 pages (`12 + 5`).
-- Other category counts: `8, 6, 11, 2, 5, 7`, each on one page.
-- Auto-sizing desktop checks: `2 → 420px`, `8 → 1180px`, `11 → 1560px`, `12 + pagination → 1640px`, and `5 + pagination → 880px`.
-- Pagination is absent for `Receipts`, `Financial Statements`, `Business Agreements`, and empty search results; it remains present on both Contracts pages and all five combined catalog pages.
-- Search for `Employment` within Contracts returns only `Employment Contract`.
-- Card geometry remains `339.66 × 356` on desktop and `334 × 356` on mobile.
-- No horizontal overflow at 1440px or 390px.
-- Browser console errors/warnings: none.
+- Desktop geometry: hero `378px`, catalog panel `1376px` wide, template list `1067px`, cards `339.66px`, contract guide `1576px`, guide column `906px`, footer `887px`.
+- Contract-guide geometry: content `1416px`, inclusion section `554px`, table `464px`, FAQ `412px`, alert `76px`.
+- Wide desktop (`1920px`): catalog panel `1856px`, template list `1547px`, cards `499.66px`, no horizontal overflow.
+- Mobile (`390px`): catalog panel `366px`, cards `334px`, contract/table/FAQ/alert content `350px`, no horizontal overflow.
+- FAQ buttons expose `aria-expanded`, reveal their answers, and return to the collapsed Figma state.
+- All 22 images visible in the tested mobile state loaded successfully.
+- Single-page category regression: Receipts renders 8 cards with no pagination.
 
 ## UX non-negotiables
 
-- Active category clearly communicates location.
-- The template name, preview, and `Use template` action retain a clear hierarchy.
-- Category buttons, pagination, search, hover, and keyboard focus remain conventional and actionable.
-- Every preview includes meaningful alt text and the interface remains usable without relying on the image alone.
+- The active category, page title, and primary card action remain visually clear.
+- Filtering, search, conditional pagination, hover/focus states, and FAQ disclosure use conventional interactions.
+- The contract comparison data is represented as a table, and the legal disclaimer is exposed as a labeled complementary region.
+- The implementation remains keyboard-operable and does not rely on imagery alone.

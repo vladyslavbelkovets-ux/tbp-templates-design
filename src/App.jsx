@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CaretLeft, CaretRight, List, MagnifyingGlass, X } from "@phosphor-icons/react";
+import { CaretDown, CaretLeft, CaretRight, Info, List, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { Button, Input } from "@universe-forma/ui-pes";
 import { categories, templates, templatesPerPage } from "./templateData";
 
@@ -144,7 +144,7 @@ function Hero({ query, onQueryChange, onMessage }) {
           <h1>
             Ready-to-use <span>document templates</span>
           </h1>
-          <p>Browse 10,000+ free templates. Customize and download in minutes.</p>
+          <p>Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.</p>
         </div>
         <Input
           id="template-search"
@@ -326,21 +326,98 @@ const contractCopy = {
   ],
 };
 
-function ContractDetails({ variant }) {
+const contractTableRows = [
+  ["Offer", "Exactly what is being bought or sold — for example, 36 units at $3 each, or office cleaning at $40 per hour per cleaner."],
+  ["Acceptance", "Confirmation that the other side agrees to the terms, shown by signing the contract."],
+  ["Consideration", "The thing of value being exchanged — usually money, but it can be other goods or services."],
+  ["Key details", "Delivery dates, payment due dates and method, condition of goods, and what happens if either side can't deliver."],
+  ["Signatures", "Both parties sign and date the contract to show they agree to the terms."],
+];
+
+const faqItems = [
+  {
+    question: "What is a contract template?",
+    answer: "A contract template is a pre-structured agreement you can customize with the terms, parties, dates, and signatures relevant to your situation.",
+  },
+  {
+    question: "When should I use one?",
+    answer: "Use one whenever you need to put an agreement in writing so everyone can review the same terms and responsibilities.",
+  },
+  {
+    question: "How do I create a contract from a template?",
+    answer: "Choose a template, replace the sample details with your own, review the wording, add signatures, and download the finished PDF.",
+  },
+  {
+    question: "Are these templates legal advice?",
+    answer: "No. The templates are for general informational and self-help purposes and do not replace advice from a qualified attorney.",
+  },
+  {
+    question: "Can I sign a contract online?",
+    answer: "Yes. You can complete the template, add electronic signatures, and save or share the signed document online.",
+  },
+];
+
+function ContractGuide() {
+  const [openFaq, setOpenFaq] = useState(null);
+
   return (
-    <section className={`contract-details contract-details--${variant}`}>
-      <div className="contract-details__inner">
-        <div className="contract-details__content">
-          <div className="contract-details__copy">
+    <section className="contract-guide">
+      <div className="contract-guide__inner">
+        <div className="contract-guide__content">
+          <div className="contract-guide__intro">
             <h2>{contractCopy.title}</h2>
-            <div className="contract-details__description">
+            <div className="contract-guide__description">
               {contractCopy.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
           </div>
-          <div className="contract-details__note">
-            <h3>What to include in a contract</h3>
-            <p>If it isn't written into the contract, it isn't part of the deal. At a minimum, cover the following:</p>
-          </div>
+          <section className="contract-includes">
+            <div className="contract-includes__heading">
+              <h3>What to include in a contract</h3>
+              <p>If it isn't written into the contract, it isn't part of the deal. At a minimum, cover the following:</p>
+            </div>
+            <div className="contract-table" role="table" aria-label="What to include in a contract">
+              <div className="contract-table__row contract-table__header" role="row">
+                <span role="columnheader">Element</span>
+                <span role="columnheader">What it covers</span>
+              </div>
+              {contractTableRows.map(([element, coverage]) => (
+                <div className="contract-table__row" role="row" key={element}>
+                  <span className="contract-table__label" role="rowheader">{element}</span>
+                  <span role="cell">{coverage}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section className="faq">
+            <h3>Frequently asked questions</h3>
+            <div className="faq__list">
+              {faqItems.map((item, index) => {
+                const isOpen = openFaq === index;
+                const panelId = `faq-panel-${index}`;
+
+                return (
+                  <div className={`faq__item${isOpen ? " is-open" : ""}`} key={item.question}>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                    >
+                      <span>{item.question}</span>
+                      <span className="faq__icon" aria-hidden="true"><CaretDown size={24} /></span>
+                    </button>
+                    <div className="faq__answer" id={panelId} hidden={!isOpen}>
+                      <p>{item.answer}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+          <aside className="legal-alert" aria-label="Legal information">
+            <span className="legal-alert__icon" aria-hidden="true"><Info size={24} weight="fill" /></span>
+            <p>TheBestPDF is not a law firm and does not provide legal advice. These templates are provided for general informational and self-help purposes only, and are not a substitute for the advice of a qualified attorney.</p>
+          </aside>
         </div>
       </div>
     </section>
@@ -406,8 +483,7 @@ export function App() {
     <div className={`page-shell${capturePage ? " page-shell--qa-capture" : ""}`}>
       <Hero query={query} onQueryChange={setQuery} onMessage={showMessage} />
       <Catalog query={query} onQueryChange={setQuery} onMessage={showMessage} />
-      <ContractDetails variant="narrow" />
-      <ContractDetails variant="wide" />
+      <ContractGuide />
       <Footer />
       <div className={`status-toast${message ? " is-visible" : ""}`} role="status" aria-live="polite">{message}</div>
     </div>
