@@ -1,39 +1,52 @@
 # Design QA — Template page
 
-## Final result
+## final result: passed
 
-**PASSED** — no P0, P1, or P2 visual issues remain.
+No P0, P1, or P2 visual issues remain in the reviewed desktop implementation.
 
 ## Comparison setup
 
-- Source: `docs/figma-reference.png`, exported from Figma frame `15:19695` (`Template page`).
-- Implementation: `qa/implementation-1440-pass-2.png`, captured from the built page at `1440 × 2905`.
-- Full comparison: `qa/comparison-final.png` (Figma left, implementation right).
-- Focused comparison: `qa/comparison-focused-final.png` (header/hero, catalog cards, footer; Figma left, implementation right).
-- Desktop state: default page, page 1, `All templates`, empty search.
-- Responsive state checked separately at `390 × 844` with the mobile menu open.
+- Current Figma page: `docs/figma-reference-current.png`, frame `15:19695`, `1440 × 3953`.
+- Current implementation: `qa/implementation-current-1440.png`, captured at `1440 × 3953`.
+- Same-input comparison: `qa/full-page-current-comparison.png` (Figma left, implementation right).
+- Card variants: Figma node `15:20776` compared in `qa/card-states-comparison.png`.
+- Desktop state: page 1, `All templates`, empty search, all cards in their default state.
 
-## Comparison history
+## Findings resolved
 
-1. Pass 1 matched the source layout, dimensions, assets, typography, cards, pagination, and footer. One P2 issue remained: the PDF Converter icon was missing its inner arrow layer.
-2. Pass 2 restored the exact Figma icon composition and passed the full-page and focused-region comparison.
+1. Replaced the incorrect Outfit project font with Inter and loaded weights 300, 400, 500, 600, 700, and 900.
+2. Preserved the Figma-specific footer exceptions: Arial Bold for the upper footer headings and Inter Black for the lower footer headings.
+3. Replaced the permanently emphasized second card with real default and hover/focus states on every card.
+4. Matched the current card radius, button radius/type, description color, dock padding, and two-layer hover shadow.
+5. Added the two current contract-information sections that now appear before the footer in frame `15:19695`.
+6. Restored the 40px Figma gap between the desktop header and hero content.
 
 ## Structural checks
 
-- Document size: `1440 × 2905`, matching the Figma frame.
-- Hero: `378px` high.
-- Catalog: `1640px` high, 197px category rail, 3-column × 4-row card grid.
-- Cards: `339.66 × 356px`, including the emphasized second-card state.
-- Footer: `887px` total, split between the dark tool footer and light information footer.
-- Horizontal overflow: none at desktop or mobile.
+- Document: `1440 × 3953`, matching Figma.
+- Hero: `378px`; heading at `y=160`, search field at `y=290`.
+- Catalog: `1640px`, 197px category rail, 3 × 4 card grid.
+- Information sections: two blocks at `524px` each; inner widths `906px` and `1146px`.
+- Footer: `887px` total.
+- Horizontal overflow: none at 1440px.
 
-## Interaction checks
+## Typography checks
 
-- Search accepts input and shows the empty state for an unmatched query.
-- Clear search restores all 12 cards.
-- Category selection updates the active category and clears search.
-- Pagination updates the current page and button disabled states.
-- `Use template` and `Log in` actions return visible status feedback.
-- Mobile navigation opens and reports `aria-expanded="true"`.
+- Hero title: Inter 700, `48/56`.
+- Navigation: Inter 500, `18/26`.
+- Search: Inter 300, `16/24`.
+- Card title: Inter 600, `16/20`.
+- Card description: Inter 400, `14/18`.
+- Card button: Inter 500, `14/18`.
+- Information heading: Inter 600, `28/34`.
+- Information body: Inter 400, `16/22`.
+- Upper footer headings: Arial 700, `16/19.2`.
+- Lower footer headings: Inter 900, `16/19.2`.
+
+## State and interaction checks
+
+- Default card: no outer shadow, 24px preview dock padding.
+- Hover/focus card: Figma two-layer shadow and 16px preview dock padding.
+- `:focus-within` was verified on the production card grid.
+- Search, empty-state recovery, categories, pagination, login/template feedback, and mobile navigation remain functional.
 - Browser console errors/warnings: none.
-

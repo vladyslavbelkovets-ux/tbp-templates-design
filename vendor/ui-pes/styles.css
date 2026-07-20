@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font: 500 16px/24px var(--font-primary, "Outfit", sans-serif);
+  font: 500 14px/18px var(--font-primary, "Inter", sans-serif);
   cursor: pointer;
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
 }
@@ -21,8 +21,8 @@
 }
 
 .ui-button--sm { min-height: 32px; padding: 6px 12px; border-radius: 10px; font-size: 14px; line-height: 20px; }
-.ui-button--ms { min-height: 40px; padding: 8px 16px; border-radius: 12px; }
-.ui-button--md { min-height: 48px; padding: 12px 16px; border-radius: 12px; }
+.ui-button--ms { min-height: 40px; padding: 8px 16px; border-radius: 4px; }
+.ui-button--md { min-height: 48px; padding: 12px 20px; border-radius: 4px; }
 .ui-button--lg { min-height: 56px; padding: 16px 20px; border-radius: 16px; }
 
 .ui-button--filled.ui-button--primary { background: var(--color-primary, #3758f9); color: #fff; }
@@ -42,7 +42,7 @@
   display: block;
   margin-bottom: 4px;
   color: var(--color-text-secondary, rgba(0, 0, 0, 0.6));
-  font: 300 14px/18px var(--font-primary, "Outfit", sans-serif);
+  font: 300 14px/18px var(--font-primary, "Inter", sans-serif);
 }
 
 .ui-input__container {
@@ -55,7 +55,7 @@
 }
 
 .ui-input__container--dense { min-height: 40px; padding: 8px 10px; border-radius: 10px; }
-.ui-input__container--lg { min-height: 56px; padding: 12px; border-radius: 12px; }
+.ui-input__container--lg { min-height: 56px; padding: 10px 12px; border-radius: 6px; }
 .ui-input__container--filled { background: rgba(0, 0, 0, 0.06); border-color: transparent; }
 .ui-input[data-focused] .ui-input__container { border-color: var(--color-primary, #3758f9); box-shadow: 0 0 0 4px rgba(55, 88, 249, 0.12); }
 .ui-input[data-error] .ui-input__container { border-color: #f23030; }
@@ -75,9 +75,9 @@
   outline: 0;
   background: transparent;
   color: var(--color-text-primary, #212e45);
-  font: 300 16px/24px var(--font-primary, "Outfit", sans-serif);
+  font: 300 16px/24px var(--font-primary, "Inter", sans-serif);
 }
 
 .ui-input__control::placeholder { color: rgba(33, 46, 69, 0.48); }
-.ui-input__message { margin: 4px 10px 0; color: var(--color-text-secondary, rgba(0, 0, 0, 0.6)); font: 400 13px/16px var(--font-primary, "Outfit", sans-serif); }
+.ui-input__message { margin: 4px 10px 0; color: var(--color-text-secondary, #4c5e7f); font: 400 13px/16px var(--font-primary, "Inter", sans-serif); }
 .ui-input__message--error { color: #f23030; }

@@ -179,10 +179,10 @@ function Hero({ query, onQueryChange, onMessage }) {
   );
 }
 
-function TemplateCard({ template, emphasized, onUse }) {
+function TemplateCard({ template, onUse, state = "interactive" }) {
   return (
-    <article className={`template-card${emphasized ? " template-card--emphasized" : ""}`}>
-      <div className={`template-card__dock${emphasized ? " template-card__dock--compact" : ""}`}>
+    <article className={`template-card${state === "hover" ? " template-card--hover" : ""}`}>
+      <div className="template-card__dock">
         <div className="template-card__preview">
           <img src={asset("template-preview.png")} alt="Preview of a customer registration form" />
         </div>
@@ -203,6 +203,17 @@ function TemplateCard({ template, emphasized, onUse }) {
         </Button>
       </div>
     </article>
+  );
+}
+
+function CardStatesPreview() {
+  const previewTemplate = templates[0];
+
+  return (
+    <main className="card-states-preview" aria-label="Template card states">
+      <TemplateCard template={previewTemplate} state="default" onUse={() => {}} />
+      <TemplateCard template={previewTemplate} state="hover" onUse={() => {}} />
+    </main>
   );
 }
 
@@ -272,11 +283,10 @@ function Catalog({ query, onQueryChange, onMessage }) {
         <div className="template-list">
           {filteredTemplates.length ? (
             <div className="template-grid">
-              {filteredTemplates.map((template, index) => (
+              {filteredTemplates.map((template) => (
                 <TemplateCard
                   key={template.id}
                   template={template}
-                  emphasized={index === 1}
                   onUse={() => onMessage(`${template.title} selected`)}
                 />
               ))}
@@ -292,6 +302,35 @@ function Catalog({ query, onQueryChange, onMessage }) {
         </div>
       </section>
     </main>
+  );
+}
+
+const contractCopy = {
+  title: "Contract templates for every kind of agreement",
+  paragraphs: [
+    "A contract puts the terms of a deal in writing, so both sides know exactly what was agreed — what's being provided, what's owed, and what happens if something changes. Our templates cover the agreements businesses rely on most, from service and employment contracts to sales, partnership, and lease agreements.",
+    "Open any template to fill in your details, edit the wording to fit your situation, add an electronic signature, and download a finished PDF. Reuse each one as often as you need, and keep your completed copies in one place.",
+  ],
+};
+
+function ContractDetails({ variant }) {
+  return (
+    <section className={`contract-details contract-details--${variant}`}>
+      <div className="contract-details__inner">
+        <div className="contract-details__content">
+          <div className="contract-details__copy">
+            <h2>{contractCopy.title}</h2>
+            <div className="contract-details__description">
+              {contractCopy.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+          </div>
+          <div className="contract-details__note">
+            <h3>What to include in a contract</h3>
+            <p>If it isn't written into the contract, it isn't part of the deal. At a minimum, cover the following:</p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -337,8 +376,13 @@ function Footer() {
 }
 
 export function App() {
+  const preview = new URLSearchParams(window.location.search).get("preview");
+  const showCardStates = preview === "card-states";
+  const capturePage = preview === "page-qa";
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
+
+  if (showCardStates) return <CardStatesPreview />;
 
   const showMessage = (text) => {
     setMessage(text);
@@ -346,9 +390,11 @@ export function App() {
   };
 
   return (
-    <div className="page-shell">
+    <div className={`page-shell${capturePage ? " page-shell--qa-capture" : ""}`}>
       <Hero query={query} onQueryChange={setQuery} onMessage={showMessage} />
       <Catalog query={query} onQueryChange={setQuery} onMessage={showMessage} />
+      <ContractDetails variant="narrow" />
+      <ContractDetails variant="wide" />
       <Footer />
       <div className={`status-toast${message ? " is-visible" : ""}`} role="status" aria-live="polite">{message}</div>
     </div>
