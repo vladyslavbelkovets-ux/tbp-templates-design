@@ -4,6 +4,15 @@
 
 No P0, P1, or P2 visual issues remain in the reviewed desktop implementation.
 
+## Populated catalog update
+
+- 56 user-provided previews are mapped to 56 unique template names across seven categories.
+- `All templates` uses five real pages at 12 cards per page; Contracts uses two pages; smaller categories use one.
+- Category filtering, combined category/search filtering, and pagination were verified in the browser.
+- Every configured preview exists, loads at `1200 × 1553`, and has title-specific alt text.
+- Desktop and mobile evidence: `qa/catalog-content-1440.jpg` and `qa/catalog-content-mobile.jpg`.
+- No horizontal overflow or browser console errors/warnings.
+
 ## Comparison setup
 
 - Current Figma page: `docs/figma-reference-current.png`, frame `15:19695`, `1440 × 3953`.

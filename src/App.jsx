@@ -1,25 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CaretLeft, CaretRight, List, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { Button, Input } from "@universe-forma/ui-pes";
+import { categories, templates, templatesPerPage } from "./templateData";
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
-
-const categories = [
-  "All templates",
-  "Receipts",
-  "Estimates",
-  "Business Agreements",
-  "Financial Statements",
-  "Business Letters",
-  "Contracts",
-  "Bill of Sale",
-];
-
-const templates = Array.from({ length: 12 }, (_, index) => ({
-  id: index + 1,
-  title: "Product Order template",
-  description: "With our free online product order form template, you can customize and embed",
-}));
 
 const footerColumns = [
   {
@@ -184,7 +168,7 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
     <article className={`template-card${state === "hover" ? " template-card--hover" : ""}`}>
       <div className="template-card__dock">
         <div className="template-card__preview">
-          <img src={asset("template-preview.png")} alt="Preview of a customer registration form" />
+          <img src={asset(template.preview)} alt={`${template.title} preview`} />
         </div>
       </div>
       <div className="template-card__body">
@@ -217,16 +201,30 @@ function CardStatesPreview() {
   );
 }
 
-function Pagination({ page, onPageChange }) {
-  const pages = [1, 2, 3, "…", 8, 9, 10];
+function Pagination({ page, pageCount, onPageChange }) {
+  const pages = useMemo(() => {
+    if (pageCount <= 7) return Array.from({ length: pageCount }, (_, index) => index + 1);
+
+    const visiblePages = [1];
+    const rangeStart = Math.max(2, page - 1);
+    const rangeEnd = Math.min(pageCount - 1, page + 1);
+
+    if (rangeStart > 2) visiblePages.push("start-ellipsis");
+    for (let pageNumber = rangeStart; pageNumber <= rangeEnd; pageNumber += 1) visiblePages.push(pageNumber);
+    if (rangeEnd < pageCount - 1) visiblePages.push("end-ellipsis");
+    visiblePages.push(pageCount);
+
+    return visiblePages;
+  }, [page, pageCount]);
+
   return (
     <nav className="pagination" aria-label="Template pages">
       <button type="button" aria-label="Previous page" disabled={page === 1} onClick={() => onPageChange(Math.max(1, page - 1))}>
         <CaretLeft size={18} weight="bold" />
       </button>
-      {pages.map((item, index) =>
-        item === "…" ? (
-          <span key={`ellipsis-${index}`} className="pagination__ellipsis">…</span>
+      {pages.map((item) =>
+        typeof item === "string" ? (
+          <span key={item} className="pagination__ellipsis">…</span>
         ) : (
           <button
             type="button"
@@ -239,7 +237,7 @@ function Pagination({ page, onPageChange }) {
           </button>
         ),
       )}
-      <button type="button" aria-label="Next page" disabled={page === 10} onClick={() => onPageChange(Math.min(10, page + 1))}>
+      <button type="button" aria-label="Next page" disabled={page === pageCount} onClick={() => onPageChange(Math.min(pageCount, page + 1))}>
         <CaretRight size={18} weight="bold" />
       </button>
     </nav>
@@ -251,9 +249,24 @@ function Catalog({ query, onQueryChange, onMessage }) {
   const [page, setPage] = useState(1);
   const filteredTemplates = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) return templates;
-    return templates.filter((template) => `${template.title} ${template.description}`.toLowerCase().includes(normalizedQuery));
-  }, [query]);
+    return templates.filter((template) => {
+      const matchesCategory = activeCategory === categories[0] || template.category === activeCategory;
+      const matchesQuery = !normalizedQuery
+        || `${template.title} ${template.category} ${template.description}`.toLowerCase().includes(normalizedQuery);
+      return matchesCategory && matchesQuery;
+    });
+  }, [activeCategory, query]);
+
+  const pageCount = Math.max(1, Math.ceil(filteredTemplates.length / templatesPerPage));
+  const currentPage = Math.min(page, pageCount);
+  const visibleTemplates = useMemo(() => {
+    const firstTemplate = (currentPage - 1) * templatesPerPage;
+    return filteredTemplates.slice(firstTemplate, firstTemplate + templatesPerPage);
+  }, [currentPage, filteredTemplates]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [activeCategory, query]);
 
   const chooseCategory = (category) => {
     setActiveCategory(category);
@@ -281,9 +294,9 @@ function Catalog({ query, onQueryChange, onMessage }) {
           </div>
         </aside>
         <div className="template-list">
-          {filteredTemplates.length ? (
+          {visibleTemplates.length ? (
             <div className="template-grid">
-              {filteredTemplates.map((template) => (
+              {visibleTemplates.map((template) => (
                 <TemplateCard
                   key={template.id}
                   template={template}
@@ -298,7 +311,7 @@ function Catalog({ query, onQueryChange, onMessage }) {
               <Button variant="outlined" color="primary" size="md" onClick={() => onQueryChange("")}>Clear search</Button>
             </div>
           )}
-          <Pagination page={page} onPageChange={setPage} />
+          {filteredTemplates.length ? <Pagination page={currentPage} pageCount={pageCount} onPageChange={setPage} /> : null}
         </div>
       </section>
     </main>

@@ -30,11 +30,15 @@ The page uses the `Button` and `Input` APIs from `@universe-forma/ui-pes`. Becau
 
 ## Interaction coverage
 
-- template search and empty state
-- category selection
-- pagination
+- template search and empty state across 56 real templates
+- category filtering across seven filename-derived categories
+- dynamic 12-card pagination
 - template and login actions
 - default and hover/focus card states
 - responsive mobile navigation
+
+## Template content
+
+The catalog data lives in `src/templateData.js`. Preview assets are stored in `public/assets/template-previews/`; each filename follows `<Category>-<Template title>.png`, matching the handoff source exactly.
 
 The source repositories were used as read-only references and were not modified.

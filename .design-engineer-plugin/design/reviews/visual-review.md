@@ -1,49 +1,60 @@
-# Visual review — fonts, card states, and current Figma frame
+# Visual review — populated template catalog
 
-Review method: same-input visual comparison against Figma nodes `15:19695` and `15:20776`, plus computed-style inspection in the in-app browser.
+Review method: live local URL in the in-app browser at desktop `1440 × 900` and mobile `390 × 844`.
 
 ## Result
 
-Passed. No P0, P1, or P2 issues remain.
+Passed. No P0, P1, or P2 issues remain in the populated catalog.
+
+## Scope
+
+- 56 user-provided PNG previews and their filename-derived template names.
+- Seven categories plus the combined `All templates` view.
+- Category filtering, search, dynamic pagination, image loading, card layout, and responsive behavior.
 
 ## Findings and applied fixes
 
-### [P1] Project font mismatch
+### [P1] Catalog still used placeholder content
 
-- **Before:** most interface text used Outfit.
-- **Expected:** the Figma project-font variable resolves to Inter.
-- **Fix:** loaded the required Inter weights, updated the project token and vendored UI-component fallbacks, and removed Outfit.
+- **Before:** all 12 cards repeated `Product Order template` and one shared placeholder preview.
+- **Expected:** each source file should render as its own card with the filename-derived category and title.
+- **Fix:** created `src/templateData.js`, copied all 56 source previews to `public/assets/template-previews/`, and bound every card to its own title, category, preview, and descriptive alt text.
 
-### [P1] Current frame contained two missing information sections
+### [P1] Category controls did not filter the cards
 
-- **Before:** the footer followed the template catalog at `y=2018`.
-- **Expected:** the current `1440 × 3953` Figma frame contains two 524px contract-information sections before the footer.
-- **Fix:** implemented both layouts with the exact widths, padding, typography, copy, note-card dimensions, and coordinates from nodes `53:16687` and `53:17006`.
+- **Before:** category buttons only changed their active color.
+- **Expected:** each category should show only its assigned templates.
+- **Fix:** applied the active category before search and pagination; category selection and a new search both reset to page 1.
 
-### [P2] Hero content was 40px too high
+### [P2] Pagination was static
 
-- **Before:** the hero omitted the Figma gap between the 88px header and the first section.
-- **Fix:** restored the 40px desktop gap; the title now starts at `y=160` and the search field at `y=290`.
+- **Before:** pagination always showed the mock sequence ending at page 10 and did not change the card slice.
+- **Expected:** page count and cards should reflect the filtered result set.
+- **Fix:** added 12-card pagination with dynamic page counts and compact ellipsis handling for larger datasets.
 
-### [P2] Hover was a permanently emphasized second card
+### [P2] Portrait previews were vertically cropped at the title
 
-- **Before:** one production card was always rendered with hover styling.
-- **Expected:** every card exposes default and hover/focus states.
-- **Fix:** moved the state changes to `:hover` and `:focus-within`, with an explicit forced state only in the isolated QA preview.
-
-### [P2] Card tokens drifted from the component variants
-
-- **Fix:** aligned the 12px card radius, 4px button radius, Inter `14/18` button type, `#4c5e7f` description, `#cbd7e6` outline, 24px/16px dock padding, and exact two-layer hover shadow.
-
-## Design-system review
-
-- Existing `Button` and `Input` APIs from the vendored `@universe-forma/ui-pes` package remain in use.
-- Card-state values are centralized as semantic CSS properties.
-- No duplicate button/input components or approximate visual assets were introduced.
+- **Before:** the legacy shared preview used a negative top offset.
+- **Expected:** the user-provided `1200 × 1553` documents should show their identifying headings.
+- **Fix:** anchored previews at the top of the existing Figma card frame without altering the card geometry or hover/focus states.
 
 ## Verification evidence
 
-- Full page: `qa/full-page-current-comparison.png`.
-- Card variants: `qa/card-states-comparison.png`.
-- Browser document size: `1440 × 3953`; no horizontal overflow.
+- Desktop screenshot: `qa/catalog-content-1440.jpg`.
+- Mobile screenshot: `qa/catalog-content-mobile.jpg`.
+- All 56 configured preview paths exist; no missing assets.
+- All 12 previews on the initial desktop page loaded at natural size `1200 × 1553`.
+- `All templates`: 5 pages (`12 + 12 + 12 + 12 + 8`).
+- `Contracts`: 2 pages (`12 + 5`).
+- Other category counts: `8, 6, 11, 2, 5, 7`, each on one page.
+- Search for `Employment` within Contracts returns only `Employment Contract`.
+- Card geometry remains `339.66 × 356` on desktop and `334 × 356` on mobile.
+- No horizontal overflow at 1440px or 390px.
 - Browser console errors/warnings: none.
+
+## UX non-negotiables
+
+- Active category clearly communicates location.
+- The template name, preview, and `Use template` action retain a clear hierarchy.
+- Category buttons, pagination, search, hover, and keyboard focus remain conventional and actionable.
+- Every preview includes meaningful alt text and the interface remains usable without relying on the image alone.
