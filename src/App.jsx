@@ -342,10 +342,21 @@ function Catalog({ query, onQueryChange, onMessage }) {
               ))}
             </div>
           ) : (
-            <div className="empty-state">
+            <div className="empty-state" role="status" aria-live="polite">
+              <span className="empty-state__icon" aria-hidden="true">
+                <img src={asset("search-off.svg")} alt="" />
+              </span>
               <h2>No templates found</h2>
-              <p>Try another search term.</p>
-              <Button variant="outlined" color="primary" size="md" onClick={() => onQueryChange("")}>Clear search</Button>
+              <p>Try a different keyword or browse another category.</p>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="md"
+                className="empty-state__button"
+                onClick={() => onQueryChange("")}
+              >
+                Clear search
+              </Button>
             </div>
           )}
           {pageCount > 1 ? <Pagination page={currentPage} pageCount={pageCount} onPageChange={setPage} /> : null}
