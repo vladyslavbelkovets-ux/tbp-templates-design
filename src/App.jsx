@@ -311,7 +311,7 @@ function Catalog({ query, onQueryChange, onMessage }) {
               <Button variant="outlined" color="primary" size="md" onClick={() => onQueryChange("")}>Clear search</Button>
             </div>
           )}
-          {filteredTemplates.length ? <Pagination page={currentPage} pageCount={pageCount} onPageChange={setPage} /> : null}
+          {pageCount > 1 ? <Pagination page={currentPage} pageCount={pageCount} onPageChange={setPage} /> : null}
         </div>
       </section>
     </main>

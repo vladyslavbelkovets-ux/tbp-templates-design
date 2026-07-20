@@ -1,4 +1,4 @@
-# Visual review — populated template catalog
+# Visual review — populated, auto-sizing template catalog
 
 Review method: live local URL in the in-app browser at desktop `1440 × 900` and mobile `390 × 844`.
 
@@ -10,7 +10,7 @@ Passed. No P0, P1, or P2 issues remain in the populated catalog.
 
 - 56 user-provided PNG previews and their filename-derived template names.
 - Seven categories plus the combined `All templates` view.
-- Category filtering, search, dynamic pagination, image loading, card layout, and responsive behavior.
+- Category filtering, search, conditional pagination, auto-sizing catalog height, image loading, card layout, and responsive behavior.
 
 ## Findings and applied fixes
 
@@ -32,6 +32,18 @@ Passed. No P0, P1, or P2 issues remain in the populated catalog.
 - **Expected:** page count and cards should reflect the filtered result set.
 - **Fix:** added 12-card pagination with dynamic page counts and compact ellipsis handling for larger datasets.
 
+### [P1] Catalog height did not follow the visible card count
+
+- **Before:** the desktop catalog reserved four card rows even when a category contained only two, five, or eight templates.
+- **Expected:** the white catalog panel should end after the final visible row, while preserving the designed gaps and card height.
+- **Fix:** removed fixed catalog, panel, list, and grid heights; the grid now creates only the required `356px` rows.
+
+### [P2] Single-page categories still showed a page selector
+
+- **Before:** every non-empty result rendered pagination, including categories with only one page.
+- **Expected:** pagination should appear only when there is another page to navigate to.
+- **Fix:** the selector now renders only when the filtered result has more than one page.
+
 ### [P2] Portrait previews were vertically cropped at the title
 
 - **Before:** the legacy shared preview used a negative top offset.
@@ -47,6 +59,8 @@ Passed. No P0, P1, or P2 issues remain in the populated catalog.
 - `All templates`: 5 pages (`12 + 12 + 12 + 12 + 8`).
 - `Contracts`: 2 pages (`12 + 5`).
 - Other category counts: `8, 6, 11, 2, 5, 7`, each on one page.
+- Auto-sizing desktop checks: `2 → 420px`, `8 → 1180px`, `11 → 1560px`, `12 + pagination → 1640px`, and `5 + pagination → 880px`.
+- Pagination is absent for `Receipts`, `Financial Statements`, `Business Agreements`, and empty search results; it remains present on both Contracts pages and all five combined catalog pages.
 - Search for `Employment` within Contracts returns only `Employment Contract`.
 - Card geometry remains `339.66 × 356` on desktop and `334 × 356` on mobile.
 - No horizontal overflow at 1440px or 390px.

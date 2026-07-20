@@ -213,7 +213,6 @@ a { color: inherit; text-decoration: none; }
 
 .catalog {
   width: 100%;
-  height: 1640px;
   padding: 0 32px;
   background: #f5f5f7;
 }
@@ -225,7 +224,6 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   gap: 48px;
   width: 100%;
-  height: 1640px;
   padding: 32px;
   border-radius: 28px;
   background: #fff;
@@ -282,16 +280,14 @@ a { color: inherit; text-decoration: none; }
   gap: 32px;
   width: 100%;
   min-width: 0;
-  height: 1576px;
 }
 
 .template-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(4, 356px);
+  grid-auto-rows: 356px;
   gap: 24px;
   width: 100%;
-  height: 1496px;
 }
 
 .template-card {
@@ -424,7 +420,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   gap: 12px;
   width: 100%;
-  height: 1496px;
+  height: 356px;
   text-align: center;
 }
 
