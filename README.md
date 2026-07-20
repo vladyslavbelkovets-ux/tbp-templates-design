@@ -1,0 +1,37 @@
+# TheBestPDF Templates — design handoff
+
+Standalone React implementation of the `Template page` frame from the Templates Library Figma file. The project is intentionally separate from `universe-forma/tbp-fe` and is designed for developer handoff.
+
+- Figma source: [Templates Library — Template page](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=15-19695)
+- Live preview: [GitHub Pages](https://vladyslavbelkovets-ux.github.io/tbp-templates-design/)
+- Reference screenshot: [`docs/figma-reference.png`](docs/figma-reference.png)
+- Visual QA report: [`design-qa.md`](design-qa.md)
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Production check:
+
+```bash
+npm run build
+npm run preview
+```
+
+## UI components
+
+The page uses the `Button` and `Input` APIs from `@universe-forma/ui-pes`. Because the original GitHub Package requires private package access, the exact components needed by this handoff are vendored under `vendor/ui-pes` and installed through a local file dependency. No credentials are stored in the repository.
+
+## Interaction coverage
+
+- template search and empty state
+- category selection
+- pagination
+- template and login actions
+- responsive mobile navigation
+
+The source repositories were used as read-only references and were not modified.
+
