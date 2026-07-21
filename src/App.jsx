@@ -318,6 +318,7 @@ function Catalog({ config, query, onQueryChange, onMessage }) {
 
   const pageCount = Math.max(1, Math.ceil(filteredTemplates.length / pageSize));
   const currentPage = Math.min(page, pageCount);
+  const isEmptyState = filteredTemplates.length === 0;
   const visibleTemplates = useMemo(() => {
     const firstTemplate = (currentPage - 1) * pageSize;
     return filteredTemplates.slice(firstTemplate, firstTemplate + pageSize);
@@ -334,9 +335,9 @@ function Catalog({ config, query, onQueryChange, onMessage }) {
   };
 
   return (
-    <main className={`catalog catalog--${config.key}${isMobileSearch ? " catalog--mobile-search" : ""}`} id="templates">
+    <main className={`catalog catalog--${config.key}${isMobileSearch ? " catalog--mobile-search" : ""}${isEmptyState ? " catalog--empty" : ""}`} id="templates">
       <section className="catalog__panel">
-        {!isMobileSearch ? (
+        {!isMobileSearch && !isEmptyState ? (
           <aside className="categories" aria-label={`${config.singular} categories`}>
             <h2>Categories</h2>
             <div className="categories__list">

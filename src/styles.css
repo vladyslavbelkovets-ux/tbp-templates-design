@@ -401,6 +401,10 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
 }
 
+.catalog--empty .catalog__panel {
+  grid-template-columns: minmax(0, 1067px);
+}
+
 .catalog--invoice .catalog__panel { min-height: 1560px; }
 
 .categories {

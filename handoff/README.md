@@ -9,7 +9,7 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 | Paginated catalog | Yes | Yes | 12 cards per desktop page; 6 per mobile page. |
 | Single-page results | Yes | Yes | Catalog height follows the visible cards; pagination is hidden. |
 | Search results | Covered | Yes | Mobile search hides category tabs and pagination. |
-| Empty results | Yes | Yes | “Clear search” resets the query and returns to page 1. |
+| Empty results | Yes | Yes | Hide categories, center the empty state, and let “Clear search” reset the query and return to page 1. |
 | Loading | Yes | Yes | Card placeholders preserve the final grid footprint and prevent layout shift. |
 | Card default | Yes | Yes | Preview starts at the top of the document. |
 | Card hover / focus | Yes | N/A | Reuse hover styling for keyboard focus; touch uses the default state. |

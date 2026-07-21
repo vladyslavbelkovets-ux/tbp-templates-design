@@ -20,6 +20,7 @@ No actionable P0, P1, or P2 visual issues remain in the reviewed desktop and mob
 - No generated or placeholder invoice preview is rendered; the mapping is documented in `handoff/invoice-previews/manifest.csv`.
 - Invoice contains exactly 12 unique cards: desktop has one page and hides pagination; mobile has two pages with 6 cards each.
 - Templates mobile empty search shows the compact state without categories or pagination.
+- Desktop empty search hides the category sidebar and centers the state across the catalog content width.
 - Desktop and mobile widths have no horizontal overflow and no broken image requests.
 - Production build succeeds with `npm run build`.
 
