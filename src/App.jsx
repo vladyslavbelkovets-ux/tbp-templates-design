@@ -206,14 +206,14 @@ function Hero({ config, query, onQueryChange, onMessage }) {
   );
 }
 
-function TemplateCard({ template, onUse, state = "interactive" }) {
+function TemplateCard({ template, onUse, state = "interactive", ctaLabel = "Use template" }) {
   return (
     <article
       className={`template-card${state === "hover" ? " template-card--hover" : ""}`}
       onClick={() => onUse(template)}
     >
       <div className="template-card__dock">
-        <div className={`template-card__preview${template.previewFit === "stretch" ? " template-card__preview--stretch" : ""}`}>
+        <div className={`template-card__preview${template.previewFit === "stretch" ? " template-card__preview--stretch" : ""}${template.previewTone === "monochrome" ? " template-card__preview--monochrome" : ""}`}>
           <img src={asset(template.preview)} alt={`${template.title} preview`} />
         </div>
       </div>
@@ -228,7 +228,7 @@ function TemplateCard({ template, onUse, state = "interactive" }) {
           size="ms"
           className="template-card__button"
         >
-          Use template
+          {ctaLabel}
         </Button>
         <IconButton
           className="template-card__chevron"
@@ -363,6 +363,7 @@ function Catalog({ config, query, onQueryChange, onMessage }) {
                 <TemplateCard
                   key={template.id}
                   template={template}
+                  ctaLabel={config.ctaLabel}
                   onUse={() => onMessage(`${template.title} selected`)}
                 />
               ))}
@@ -663,10 +664,144 @@ function FormsGuide() {
           <div><strong>500K+</strong><span>forms completed</span></div>
           <div><strong>50</strong><span>U.S. states supported</span></div>
         </section>
-        <FaqList title="Forms FAQ" items={formFaqItems} className="forms-faq" idPrefix="forms-faq" />
+        <FaqList title="Frequently asked questions" items={formFaqItems} className="forms-faq" idPrefix="forms-faq" />
         <aside className="legal-alert forms-legal-alert" aria-label="Forms legal information">
           <span className="legal-alert__icon" aria-hidden="true"><Info size={24} weight="fill" /></span>
           <p>TheBestPDF is not a law firm, a government agency, or a tax advisor, and is not affiliated with the IRS, USCIS, the U.S. Department of State, or CMS. We provide fillable form templates for your convenience. Always verify the current official version and requirements with the issuing agency.</p>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+const invoiceIncludeItems = [
+  {
+    icon: Buildings,
+    title: "Your business details",
+    description: "Company name, logo, address, and contact information.",
+  },
+  {
+    icon: UsersThree,
+    title: "Bill-to details",
+    description: "Your client's name, company, and billing address.",
+  },
+  {
+    icon: Keyboard,
+    title: "Invoice number & dates",
+    description: "A unique invoice number, issue date, and due date.",
+  },
+  {
+    icon: List,
+    title: "Itemized line items",
+    description: "Description, quantity, rate, and amount for each charge.",
+  },
+  {
+    icon: ChartBar,
+    title: "Subtotal, tax & total",
+    description: "Automatic subtotals, tax, discounts, and the amount due.",
+  },
+  {
+    icon: FileText,
+    title: "Payment terms & notes",
+    description: "How and when to pay, plus space for a thank-you note.",
+  },
+];
+
+const invoiceRelatedCategories = [
+  {
+    title: "Receipts",
+    description: "Payment, rent, and cash receipt templates.",
+  },
+  {
+    title: "Business Letters",
+    description: "Quotes, estimates, and payment demand letters.",
+  },
+  {
+    title: "Contracts",
+    description: "Service, freelance, and contractor agreements.",
+  },
+];
+
+const invoiceFaqItems = [
+  {
+    question: "How do I create an invoice?",
+    answer: "Choose a template, add your business and client details, enter each line item, review the calculated total, and download the finished invoice.",
+  },
+  {
+    question: "What's the difference between an invoice and a proforma invoice?",
+    answer: "An invoice requests payment for completed or confirmed work. A proforma invoice is a preliminary document shared before the final sale or delivery.",
+  },
+  {
+    question: "Do these invoices calculate totals and tax automatically?",
+    answer: "Yes. Enter quantities, rates, discounts, and tax, and the template calculates the subtotal and amount due as you go.",
+  },
+  {
+    question: "Can I add my own logo and branding?",
+    answer: "Yes. You can add your logo and business details so every invoice matches your brand.",
+  },
+  {
+    question: "Can I reuse an invoice template?",
+    answer: "Yes. Save the completed layout and reuse it for future clients or recurring work.",
+  },
+];
+
+function InvoiceGuide() {
+  return (
+    <section className="invoice-guide">
+      <div className="invoice-guide__inner">
+        <section className="invoice-guide__intro">
+          <h2>Invoice templates that get you paid faster</h2>
+          <div className="invoice-guide__description">
+            <p>A clear, professional invoice is the quickest way to get paid for your work. Instead of wrestling with a spreadsheet or paying for accounting software, our invoice templates give you a polished, ready-to-send starting point for every kind of billing, from simple invoices and freelance invoices to commercial, construction, and catering invoices.</p>
+            <p>Every invoice opens in your browser. Add your logo and business details, list your line items, and totals and tax calculate automatically. Download a finished PDF, send it to your client, and reuse the template for your next job, with every invoice saved in one place.</p>
+          </div>
+        </section>
+
+        <section className="invoice-includes">
+          <div className="invoice-includes__heading">
+            <h3>What an invoice template includes</h3>
+            <p>Every template comes pre-built with the fields a complete invoice needs. Fill them in, and totals and tax calculate as you go.</p>
+          </div>
+          <div className="invoice-includes__grid">
+            {invoiceIncludeItems.map(({ icon: Icon, title, description }) => (
+              <article className="invoice-feature" key={title}>
+                <span className="invoice-feature__icon" aria-hidden="true"><Icon size={20} weight="fill" /></span>
+                <div>
+                  <h4>{title}</h4>
+                  <p>{description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="invoice-related">
+          <h3>Related categories</h3>
+          <div className="invoice-related__grid">
+            {invoiceRelatedCategories.map((category) => (
+              <a className="invoice-related__card" href="#templates" key={category.title}>
+                <h4>{category.title}</h4>
+                <p>{category.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <FaqList
+          title={(
+            <>
+              <span className="invoice-faq__desktop-title">FAQ</span>
+              <span className="invoice-faq__mobile-title">Frequently asked questions</span>
+            </>
+          )}
+          items={invoiceFaqItems}
+          className="invoice-faq"
+          idPrefix="invoice-faq"
+        />
+
+        <aside className="legal-alert invoice-legal-alert" aria-label="Invoice legal information">
+          <span className="legal-alert__icon" aria-hidden="true"><Info size={24} weight="fill" /></span>
+          <p>TheBestPDF is not an accounting or tax firm and does not provide financial advice. Our invoice templates are general-purpose documents for your convenience. For questions about tax rates, reporting, or compliance, we recommend consulting a qualified accountant.</p>
         </aside>
       </div>
     </section>
@@ -747,6 +882,7 @@ const pageConfigs = {
     categoryOptions: categories,
     items: templates,
     guide: "contracts",
+    ctaLabel: "Use template",
   },
   invoice: {
     key: "invoice",
@@ -757,10 +893,11 @@ const pageConfigs = {
     mobileTagline: "Create a professional invoices in minutes. Customize and download as PDF, Word or Excel.",
     placeholder: "Search invoices…",
     mobilePlaceholder: "Search invoices…",
-    categoryOptions: serviceCategories,
+    categoryOptions: ["All templates", "Popular", "Business", "Freelance", "Contractors", "Services"],
     items: invoiceTemplates,
     mobileItems: repeatTemplates(invoiceTemplates, 60, "invoice-mobile"),
-    guide: null,
+    guide: "invoice",
+    ctaLabel: "Use template",
   },
   forms: {
     key: "forms",
@@ -775,6 +912,7 @@ const pageConfigs = {
     items: repeatTemplates(formTemplates, 120, "forms"),
     mobileItems: repeatTemplates(formTemplates, 60, "forms-mobile"),
     guide: "forms",
+    ctaLabel: "Fill out form",
   },
 };
 
@@ -818,6 +956,7 @@ function ProductPage({ view = "templates", capturePage = false, embedded = false
       <Hero config={config} query={query} onQueryChange={setQuery} onMessage={showMessage} />
       <Catalog key={config.key} config={config} query={query} onQueryChange={setQuery} onMessage={showMessage} />
       {config.guide === "contracts" ? <ContractGuide /> : null}
+      {config.guide === "invoice" ? <InvoiceGuide /> : null}
       {config.guide === "forms" ? <FormsGuide /> : null}
       <Footer />
       <div className={`status-toast${message ? " is-visible" : ""}`} role="status" aria-live="polite">{message}</div>

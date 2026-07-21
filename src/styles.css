@@ -524,6 +524,10 @@ a { color: inherit; text-decoration: none; }
   object-fit: fill;
 }
 
+.template-card__preview--monochrome img {
+  filter: grayscale(1) contrast(1.1);
+}
+
 .template-card__body {
   position: relative;
   z-index: 1;
@@ -940,6 +944,178 @@ a { color: inherit; text-decoration: none; }
   font-weight: 400;
   line-height: 22px;
 }
+
+.invoice-guide {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 1706px;
+  padding: 64px 32px;
+  background: var(--color-page);
+}
+
+.invoice-guide__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  width: 100%;
+  max-width: 906px;
+}
+
+.invoice-guide h2,
+.invoice-guide h3,
+.invoice-guide h4,
+.invoice-guide p { margin: 0; }
+
+.invoice-guide__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.invoice-guide__intro h2 {
+  color: var(--color-text-primary);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.invoice-guide__description {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+.invoice-guide__description p + p { margin-top: 16px; }
+
+.invoice-includes,
+.invoice-related {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.invoice-includes__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.invoice-includes h3,
+.invoice-related h3 {
+  color: var(--color-text-primary);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 34px;
+}
+
+.invoice-includes__heading > p {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.invoice-includes__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 64px;
+}
+
+.invoice-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.invoice-feature__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: var(--radius-icon-button-md);
+  background: var(--color-primary-opacity-12);
+  color: var(--color-primary);
+}
+
+.invoice-feature > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.invoice-feature h4 {
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.invoice-feature p {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.invoice-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.invoice-related__card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 94px;
+  padding: 16px;
+  border-radius: var(--radius-card);
+  background: #fff;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.invoice-related__card:hover,
+.invoice-related__card:focus-visible {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.invoice-related__card h4 {
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.invoice-related__card p {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.invoice-faq { gap: 24px; }
+
+.invoice-faq h3 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.invoice-faq__mobile-title { display: none; }
+
+.invoice-faq .faq__item button {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.invoice-legal-alert { min-height: 98px; }
 
 .forms-guide {
   display: flex;
@@ -1358,6 +1534,8 @@ a { color: inherit; text-decoration: none; }
   .categories__list button.is-active { background: rgba(55, 88, 249, 0.1); }
   .contract-guide { padding: 56px 28px; }
   .contract-guide__content { gap: 52px; }
+  .invoice-guide { padding: 56px 28px; }
+  .invoice-guide__inner { gap: 52px; }
   .contract-table__row { grid-template-columns: 160px minmax(0, 1fr); height: auto; min-height: 56px; }
   .contract-table__header { min-height: 48px; }
   .contract-table__row:last-child { height: auto; min-height: 64px; }
@@ -1809,6 +1987,88 @@ a { color: inherit; text-decoration: none; }
   }
 
   .forms-legal-alert p {
+    align-self: flex-start;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .invoice-guide {
+    min-height: 0;
+    padding: 48px 16px;
+  }
+
+  .invoice-guide__inner {
+    gap: 48px;
+    max-width: 343px;
+  }
+
+  .invoice-guide__intro h2,
+  .invoice-includes h3,
+  .invoice-related h3,
+  .invoice-faq h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+
+  .invoice-guide__description,
+  .invoice-includes__heading > p {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .invoice-guide__description p + p { margin-top: 18px; }
+  .invoice-includes__heading { gap: 10px; }
+
+  .invoice-includes__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .invoice-feature { min-height: 78px; }
+
+  .invoice-feature h4 {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .invoice-feature p {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .invoice-related__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .invoice-related__card {
+    min-height: 96px;
+    border-radius: var(--radius-card);
+  }
+
+  .invoice-related__card:hover,
+  .invoice-related__card:focus-visible {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .invoice-faq__desktop-title { display: none; }
+  .invoice-faq__mobile-title { display: inline; }
+
+  .invoice-faq .faq__item button {
+    min-height: 72px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+
+  .invoice-legal-alert {
+    min-height: 208px;
+    padding: 16px;
+  }
+
+  .invoice-legal-alert p {
     align-self: flex-start;
     font-size: 14px;
     line-height: 18px;

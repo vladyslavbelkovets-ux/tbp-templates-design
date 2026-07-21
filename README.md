@@ -3,8 +3,9 @@
 Standalone React implementation of the Templates, Invoice, and Forms desktop/mobile frames from the Templates Library Figma file. The project is intentionally separate from `universe-forma/tbp-fe` and is designed for developer handoff.
 
 - Figma source: [Templates Library — Template page](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=15-19695)
-- Forms source: [Templates Library — Forms](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=205-24460)
-- Invoice source: [Templates Library — Invoice](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=205-24595)
+- Forms content source: [Templates Library — Forms catalog](https://www.figma.com/design/EGgCjJ9KZf2XoX3RXKKuFC/Templates-library?node-id=72-43790)
+- Forms handoff frame: [A/B Testing TBP — Forms](https://www.figma.com/design/mHGmB1eJ1Y0FvdNIg122GM/%F0%9F%9F%A6-A-B-Testing---TBP?node-id=27980-65156)
+- Invoice handoff frame: [A/B Testing TBP — Invoices](https://www.figma.com/design/mHGmB1eJ1Y0FvdNIg122GM/%F0%9F%9F%A6-A-B-Testing---TBP?node-id=27980-65291)
 - Live preview: [GitHub Pages](https://vladyslavbelkovets-ux.github.io/tbp-templates-design/)
 - Current reference screenshot: [`docs/figma-reference-current.png`](docs/figma-reference-current.png)
 - Card-state reference: [`docs/figma-card-states.png`](docs/figma-card-states.png)
@@ -42,9 +43,10 @@ See [`.design-engineer-plugin/design/dev/design-system.md`](.design-engineer-plu
 - responsive mobile navigation
 - in-place Mobile/Desktop and Invoice/Templates/Forms preview switching
 - Forms-specific content, official form previews, FAQ, and legal state
+- Invoice-specific catalog, included-fields guide, related categories, FAQ, and accounting notice
 
 ## Template content
 
-The catalog data lives in `src/templateData.js`. Preview assets are stored in `public/assets/template-previews/`; each filename follows `<Category>-<Template title>.png`, matching the handoff source exactly.
+The catalog data lives in `src/templateData.js`. Preview assets are grouped by product in `public/assets/template-previews/`, `public/assets/form-previews/`, and `public/assets/invoice-previews/`. Forms use the source image treatment from Figma, including the grayscale overrides for 1099-NEC, W-2, and CMS-1500.
 
 The source repositories were used as read-only references and were not modified.

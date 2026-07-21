@@ -1,48 +1,47 @@
-# Visual review — Templates Library
+# Visual review — Templates, Invoices, and Forms
 
 ## Scope
 
-- Desktop reference: Figma node `15:19695` at 1440 px.
-- Mobile reference: Figma node `39:11153` at 375 px.
-- Reviewed the hero, template catalog, contract guide, FAQ, footer, interactive states, and responsive transitions.
+- Forms source: Templates Library node `72:43790`.
+- Forms handoff: A/B Testing TBP node `27980:65156`.
+- Invoice design: A/B Testing TBP node `27980:65291`.
+- Reviewed desktop at 1440 px and mobile at 375 px.
+- Checked hero, search, categories, catalog density, preview crop, pagination, empty state, content guide, FAQ, legal notice, and footer.
 
 ## Corrections included
 
-- Restored The Best PDF's project font, Inter, and removed the incorrect Outfit dependency.
-- Mapped radii to the resolved Figma variables: card 12 px, card content 16 px, mobile tab 8 px, icon button 4 px, alert 4 px, and DataGrid 16 px.
-- Matched desktop and mobile section boundaries to the Figma frames.
-- Kept 12 cards per desktop page and changed mobile pages to 6 cards.
-- Converted the desktop category sidebar into horizontally scrollable mobile tabs.
-- Added the Figma mobile search state (`72:30766`): category filters are removed while searching and the catalog height follows the result count.
-- Mobile search ignores the previously selected category so hidden filters cannot silently limit results.
-- Replaced the mobile card button with the compact chevron action.
-- Synchronized the desktop `Use template` hover treatment with the card hover/focus state, using Figma's 8% action overlay.
-- Expanded the template action across the entire card while keeping the existing desktop button and mobile chevron as keyboard-accessible controls.
-- Top-aligned every document preview so the beginning of the document is visible.
-- Made pagination responsive and hidden when only one page exists.
-- Rebuilt DataGrid node `72:20267` with its exact 906 × 388 px desktop geometry, 200 px first column, resolved typography, borders, and variable row heights.
-- Preserved the corresponding stacked mobile DataGrid at 343 × 486 px.
-- Matched the FAQ spacing, dividers, and transparent background.
-- Added the mobile footer accordion and aligned its open and collapsed states.
-- Replaced the local two-component `vendor/ui-pes` copy with the published `@universe-forma/ui-pes@0.5.45` package.
-- Routed every button, icon button, and input through UI-PES while preserving The Best PDF typography and radii.
+- Restored all 12 Forms desktop cards from the verified Templates Library source.
+- Kept every Forms card connected to the local `Template Card` component; only title, description, CTA, and image overrides changed.
+- Replaced receipt and estimate content with W-9, W-4, 1099-NEC, W-2, 1040-ES, 941, Schedule C, I-9, I-864, DS-11, DS-82, and CMS-1500.
+- Restored the original form preview assets and kept the document crop aligned to the top.
+- Applied the source grayscale/contrast treatment to 1099-NEC, W-2, and CMS-1500, removing the incorrect red appearance.
+- Synchronized Forms CTAs to `Fill out form` and copied the source descriptions exactly.
+- Added the complete Invoice content section: introduction, included fields, related categories, FAQ, accounting notice, and responsive layout.
+- Kept Invoice catalog content invoice-specific and reused the existing invoice preview library.
+- Added the Invoice single-page rule on desktop: 12 cards and no pagination.
+- Preserved mobile pagination at 6 cards per page.
+- Confirmed the mobile search empty state removes categories and pagination and resizes to its content.
+- Preserved Inter, existing radii, UI-PES controls, footer accordions, and the established page tokens.
 
 ## Verification
 
-- Desktop sections: hero 378 px, catalog 1632 px, content 1472 px, footer 887 px.
-- Mobile sections: hero 290 px, catalog 1634 px, content 1748 px, footer 1696 px.
-- Responsive checks passed at 320, 375, 620, 621, 768, 1024, and 1440 px with no horizontal overflow.
-- All 56 templates have unique descriptions; none are missing.
-- Search collapses the catalog to one result and removes pagination when only one page remains.
-- A three-result mobile search produces the exact 776 px catalog section with no filters or pagination.
-- Desktop DataGrid row heights match Figma exactly: 48, 76, 56, 76, 76, and 56 px.
-- Resolved font and radius variables match The Best PDF tokens on desktop and mobile.
-- Hovering or focusing any desktop card also applies the approved hover state to its `Use template` button; the mobile chevron state is unchanged.
-- Clicking the preview, title, description, desktop CTA, or mobile card area triggers the same template action once.
-- Production build passes with no browser console errors.
-- All 51 rendered buttons and the search input use UI-PES primitives in the production bundle.
-- `npm audit` reports zero known vulnerabilities.
+- Production build passes with `npm run build`.
+- Invoice desktop: 12 cards, no pagination, 1440 px document width, no horizontal overflow, and no broken images.
+- Forms mobile: 6 cards, pagination visible, 375 px document width, no horizontal overflow, and no broken images.
+- Templates mobile empty state: no cards, no pagination, clear-search action visible, and no horizontal overflow.
+- Forms desktop visually matches the restored Figma frame, including grayscale previews and `Frequently asked questions` copy.
+- Invoice desktop and mobile screenshots match the Figma section order and responsive composition.
+- The only console message is a non-visual React `forwardRef` warning emitted by the published UI-PES dependency in development mode; it does not affect rendering or interaction.
+
+## Review artifacts
+
+- `qa/figma-forms-restored.png`
+- `qa/forms-desktop-final.png`
+- `qa/forms-mobile-final.png`
+- `qa/invoice-desktop-final.png`
+- `qa/invoice-mobile-final.png`
+- `qa/templates-empty-mobile-final.png`
 
 ## Result
 
-No unresolved critical or major visual issues remain in the reviewed scope.
+No unresolved critical or major visual differences remain in the reviewed scope.
