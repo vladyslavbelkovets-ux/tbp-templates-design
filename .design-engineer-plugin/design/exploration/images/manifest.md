@@ -8,6 +8,25 @@
 - Decision: use the user-provided assets directly. No stock search, generation, cropping, or replacement.
 - File mapping: `<Category>-<Template title>.png`; the same category and title are exposed in `src/templateData.js`.
 
+## Invoice reuse mapping
+
+Invoice cards do not introduce a separate generated image set. Each approved Invoice title reuses the closest existing Templates document by purpose:
+
+| Invoice card | Reused Templates preview |
+|---|---|
+| Simple Invoice | Receipts — General Receipt |
+| Commercial Invoice | Receipts — Sales Receipt |
+| Freelance Invoice | Contracts — Freelance Contract |
+| Contractor Invoice | Estimates — Contractor Estimate Template |
+| Consulting Invoice | Contracts — Consulting Contract |
+| Construction Invoice | Estimates — Construction Estimate Template |
+| Proforma Invoice | Estimates — Estimate Template |
+| Square Invoice | Receipts — Payment Receipt |
+| Auto Repair Invoice | Estimates — Job Estimate Template |
+| Cleaning Invoice | Contracts — Cleaning Contract |
+| Plumbing Invoice | Contracts — Service Contract |
+| Catering Invoice | Contracts — Catering Contract |
+
 ## Inventory
 
 | Category | Count |

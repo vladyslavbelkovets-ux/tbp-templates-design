@@ -1,45 +1,48 @@
-# Visual review — centered template catalog
+# Visual review — Templates, Invoices, and Forms
 
-Review source: the user's catalog reference screenshot, the existing implementation before commit `f041913`, and the current Figma-based page structure.
+## Scope
 
-Review method: live local implementation at wide desktop `1920 × 1000`, design desktop `1440 × 900`, and mobile `390 × 844`.
+- Forms source: Templates Library node `72:43790`.
+- Forms handoff: A/B Testing TBP node `27980:65156`.
+- Invoice design: A/B Testing TBP node `27980:65291`.
+- Reviewed desktop at 1440 px and mobile at 375 px.
+- Checked hero, search, categories, catalog density, preview crop, pagination, empty state, content guide, FAQ, legal notice, and footer.
+
+## Corrections included
+
+- Restored all 12 Forms desktop cards from the verified Templates Library source.
+- Kept every Forms card connected to the local `Template Card` component; only title, description, CTA, and image overrides changed.
+- Replaced receipt and estimate content with W-9, W-4, 1099-NEC, W-2, 1040-ES, 941, Schedule C, I-9, I-864, DS-11, DS-82, and CMS-1500.
+- Restored the original form preview assets and kept the document crop aligned to the top.
+- Applied the source grayscale/contrast treatment to 1099-NEC, W-2, and CMS-1500, removing the incorrect red appearance.
+- Synchronized Forms CTAs to `Fill out form` and copied the source descriptions exactly.
+- Added the complete Invoice content section: introduction, included fields, related categories, FAQ, accounting notice, and responsive layout.
+- Kept all 12 approved Invoice titles and restored the exact source descriptions.
+- Replaced generated Invoice artwork with semantically matched, existing Templates previews; no new preview artwork is used.
+- Added the Invoice single-page rule on desktop: 12 cards and no pagination.
+- Removed the old repeated mobile fixture: Invoice now contains 12 unique cards and two mobile pages at 6 cards per page.
+- Confirmed the mobile search empty state removes categories and pagination and resizes to its content.
+- Preserved Inter, existing radii, UI-PES controls, footer accordions, and the established page tokens.
+
+## Verification
+
+- Production build passes with `npm run build`.
+- Invoice desktop: 12 cards with reused Templates documents, no pagination, 1440 px document width, no horizontal overflow, and no broken images.
+- Invoice mobile: 6 unique cards on page 1, two pages total, no horizontal overflow, and no broken images.
+- Forms mobile: 6 cards, pagination visible, 375 px document width, no horizontal overflow, and no broken images.
+- Templates mobile empty state: no cards, no pagination, clear-search action visible, and no horizontal overflow.
+- Forms desktop visually matches the restored Figma frame, including grayscale previews and `Frequently asked questions` copy.
+- Invoice desktop and mobile screenshots match the Figma section order and responsive composition.
+- The only console message is a non-visual React `forwardRef` warning emitted by the published UI-PES dependency in development mode; it does not affect rendering or interaction.
+
+## Review artifacts
+
+- `qa/figma-forms-restored.png`
+- `qa/forms-desktop-final.png`
+- `qa/forms-mobile-final.png`
+- `qa/templates-empty-mobile-final.png`
+- `handoff/invoice-previews/manifest.csv`
 
 ## Result
 
-Passed. The complete catalog is centered as one bounded block, and the previously approved font and corner geometry are restored.
-
-## Applied corrections
-
-### [P1] The catalog expanded edge-to-edge on wide screens
-
-- **Expected:** categories and cards should remain one centered catalog surface, matching the supplied reference composition.
-- **Actual:** after the previous revision, the grid continued growing with the viewport and cards reached almost `500px` wide at `1920px`.
-- **Fix:** constrained the complete catalog to the `1440px` design canvas and centered it with automatic outer margins. The white panel remains `1376px` wide and its internal card grid still uses all available design width.
-
-### [P1] Typography changed from the approved implementation
-
-- **Expected:** Inter throughout the existing page.
-- **Actual:** the previous revision switched the project font to Outfit.
-- **Fix:** restored Inter as the primary font and removed the unused Outfit dependency and font files from the build.
-
-### [P2] Corner radii changed from the approved implementation
-
-- **Expected:** card `12px`, card action `4px`, search field `6px`, and login action `4px`.
-- **Actual:** the previous revision increased these values to `16px` and `12px`.
-- **Fix:** restored the earlier design tokens and component-specific radii.
-
-## Verification evidence
-
-- Wide desktop (`1920px`): complete catalog `1440px`, centered at `960px`; white panel from `272px` to `1648px`, centered at `960px`.
-- Design desktop (`1440px`): white panel from `32px` to `1408px`, centered at `720px`.
-- Mobile (`390px`): white panel from `12px` to `378px`, centered at `195px`.
-- Computed primary font: `Inter, sans-serif`.
-- Computed radii: card `12px`, card button `4px`, search `6px`, login `4px`.
-- No horizontal overflow at `1920px`, `1440px`, or `390px`.
-- Existing filtering, conditional pagination, responsive card count, table, FAQ, and legal alert remain intact.
-
-## UX non-negotiables
-
-- Categories and cards read as one grouped catalog instead of two disconnected regions.
-- The primary `Use template` action remains consistent across all cards.
-- Active category, filtering, search, pagination, and FAQ disclosure retain conventional interaction and visible focus behavior.
+No unresolved critical or major visual differences remain in the reviewed scope.

@@ -2,7 +2,8 @@ node_modules/
 dist/
 .npm-cache/
 .DS_Store
+.playwright-cli/
+output/
 .env
 .env.*
 !.env.example
-

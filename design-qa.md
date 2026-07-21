@@ -1,61 +1,37 @@
-# Design QA — Template page
+# Design QA — Templates / Invoice / Forms
 
-## final result: passed
+## Result: passed
 
-No P0, P1, or P2 visual issues remain in the reviewed desktop implementation.
+No actionable P0, P1, or P2 visual issues remain in the reviewed desktop and mobile implementation.
 
-## Populated catalog update
+## Source of truth
 
-- 56 user-provided previews are mapped to 56 unique template names across seven categories.
-- `All templates` uses five real pages at 12 cards per page; Contracts uses two pages; smaller categories use one.
-- Category filtering, combined category/search filtering, and pagination were verified in the browser.
-- Every configured preview exists, loads at `1200 × 1553`, and has title-specific alt text.
-- Desktop and mobile evidence: `qa/catalog-content-1440.jpg` and `qa/catalog-content-mobile.jpg`.
-- No horizontal overflow or browser console errors/warnings.
+- Templates: Templates Library node `15:19695`.
+- Forms content and previews: Templates Library node `72:43790`.
+- Forms handoff: A/B Testing TBP node `27980:65156`.
+- Invoice handoff: A/B Testing TBP node `27980:65291`.
 
-## Comparison setup
+## Verified outcomes
 
-- Current Figma page: `docs/figma-reference-current.png`, frame `15:19695`, `1440 × 3953`.
-- Current implementation: `qa/implementation-current-1440.png`, captured at `1440 × 3953`.
-- Same-input comparison: `qa/full-page-current-comparison.png` (Figma left, implementation right).
-- Card variants: Figma node `15:20776` compared in `qa/card-states-comparison.png`.
-- Desktop state: page 1, `All templates`, empty search, all cards in their default state.
+- Forms desktop contains the 12 correct official forms, not Template receipt/estimate content.
+- Forms titles, short descriptions, preview images, `Fill out form` CTA, and top-aligned crops match the approved source.
+- 1099-NEC, W-2, and CMS-1500 use the Figma grayscale/contrast treatment instead of rendering red.
+- Invoice keeps the 12 approved invoice titles and exact source descriptions, while each card reuses the closest real document preview from the Templates library.
+- No generated or placeholder invoice preview is rendered; the mapping is documented in `handoff/invoice-previews/manifest.csv`.
+- Invoice contains exactly 12 unique cards: desktop has one page and hides pagination; mobile has two pages with 6 cards each.
+- Templates mobile empty search shows the compact state without categories or pagination.
+- Desktop empty search hides the category sidebar and centers the state across the catalog content width.
+- Desktop and mobile widths have no horizontal overflow and no broken image requests.
+- Production build succeeds with `npm run build`.
 
-## Findings resolved
+## Evidence
 
-1. Replaced the incorrect Outfit project font with Inter and loaded weights 300, 400, 500, 600, 700, and 900.
-2. Preserved the Figma-specific footer exceptions: Arial Bold for the upper footer headings and Inter Black for the lower footer headings.
-3. Replaced the permanently emphasized second card with real default and hover/focus states on every card.
-4. Matched the current card radius, button radius/type, description color, dock padding, and two-layer hover shadow.
-5. Added the two current contract-information sections that now appear before the footer in frame `15:19695`.
-6. Restored the 40px Figma gap between the desktop header and hero content.
+- `qa/figma-forms-restored.png`
+- `qa/forms-desktop-final.png`
+- `qa/forms-mobile-final.png`
+- `qa/templates-empty-mobile-final.png`
+- `handoff/invoice-previews/manifest.csv` (the reviewed Invoice-to-Template preview map)
 
-## Structural checks
+## Technical note
 
-- Document: `1440 × 3953`, matching Figma.
-- Hero: `378px`; heading at `y=160`, search field at `y=290`.
-- Catalog: `1640px`, 197px category rail, 3 × 4 card grid.
-- Information sections: two blocks at `524px` each; inner widths `906px` and `1146px`.
-- Footer: `887px` total.
-- Horizontal overflow: none at 1440px.
-
-## Typography checks
-
-- Hero title: Inter 700, `48/56`.
-- Navigation: Inter 500, `18/26`.
-- Search: Inter 300, `16/24`.
-- Card title: Inter 600, `16/20`.
-- Card description: Inter 400, `14/18`.
-- Card button: Inter 500, `14/18`.
-- Information heading: Inter 600, `28/34`.
-- Information body: Inter 400, `16/22`.
-- Upper footer headings: Arial 700, `16/19.2`.
-- Lower footer headings: Inter 900, `16/19.2`.
-
-## State and interaction checks
-
-- Default card: no outer shadow, 24px preview dock padding.
-- Hover/focus card: Figma two-layer shadow and 16px preview dock padding.
-- `:focus-within` was verified on the production card grid.
-- Search, empty-state recovery, categories, pagination, login/template feedback, and mobile navigation remain functional.
-- Browser console errors/warnings: none.
+The published UI-PES package emits one React `forwardRef` development warning. It is non-visual and does not affect the reviewed layout or interactions.
