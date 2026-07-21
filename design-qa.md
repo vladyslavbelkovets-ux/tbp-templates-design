@@ -16,8 +16,9 @@ No actionable P0, P1, or P2 visual issues remain in the reviewed desktop and mob
 - Forms desktop contains the 12 correct official forms, not Template receipt/estimate content.
 - Forms titles, short descriptions, preview images, `Fill out form` CTA, and top-aligned crops match the approved source.
 - 1099-NEC, W-2, and CMS-1500 use the Figma grayscale/contrast treatment instead of rendering red.
-- Invoice uses 12 dedicated invoice previews and includes the full desktop/mobile content guide, related categories, FAQ, accounting notice, and footer.
-- Invoice desktop has one page and therefore hides pagination; mobile shows 6 cards per page and pagination.
+- Invoice keeps the 12 approved invoice titles and exact source descriptions, while each card reuses the closest real document preview from the Templates library.
+- No generated or placeholder invoice preview is rendered; the mapping is documented in `handoff/invoice-previews/manifest.csv`.
+- Invoice contains exactly 12 unique cards: desktop has one page and hides pagination; mobile has two pages with 6 cards each.
 - Templates mobile empty search shows the compact state without categories or pagination.
 - Desktop and mobile widths have no horizontal overflow and no broken image requests.
 - Production build succeeds with `npm run build`.
@@ -27,9 +28,8 @@ No actionable P0, P1, or P2 visual issues remain in the reviewed desktop and mob
 - `qa/figma-forms-restored.png`
 - `qa/forms-desktop-final.png`
 - `qa/forms-mobile-final.png`
-- `qa/invoice-desktop-final.png`
-- `qa/invoice-mobile-final.png`
 - `qa/templates-empty-mobile-final.png`
+- `handoff/invoice-previews/manifest.csv` (the reviewed Invoice-to-Template preview map)
 
 ## Technical note
 

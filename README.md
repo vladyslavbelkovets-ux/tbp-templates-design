@@ -43,10 +43,10 @@ See [`.design-engineer-plugin/design/dev/design-system.md`](.design-engineer-plu
 - responsive mobile navigation
 - in-place Mobile/Desktop and Invoice/Templates/Forms preview switching
 - Forms-specific content, official form previews, FAQ, and legal state
-- Invoice-specific catalog, included-fields guide, related categories, FAQ, and accounting notice
+- Invoice-specific catalog with 12 approved titles, exact source copy, reused Templates previews, included-fields guide, related categories, FAQ, and accounting notice
 
 ## Template content
 
-The catalog data lives in `src/templateData.js`. Preview assets are grouped by product in `public/assets/template-previews/`, `public/assets/form-previews/`, and `public/assets/invoice-previews/`. Forms use the source image treatment from Figma, including the grayscale overrides for 1099-NEC, W-2, and CMS-1500.
+The catalog data lives in `src/templateData.js`. Templates and Invoice cards reuse `public/assets/template-previews/`; Forms use `public/assets/form-previews/` with the source image treatment from Figma, including the grayscale overrides for 1099-NEC, W-2, and CMS-1500. The Invoice-to-Template preview mapping is documented in `handoff/invoice-previews/`.
 
 The source repositories were used as read-only references and were not modified.

@@ -14,7 +14,7 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 | Card default | Yes | Yes | Preview starts at the top of the document. |
 | Card hover / focus | Yes | N/A | Reuse hover styling for keyboard focus; touch uses the default state. |
 | Forms category | Yes | Yes | Desktop and mobile use the dedicated forms preview library. |
-| Invoices category | Yes | Yes | Desktop and mobile are documented as a responsive pair. |
+| Invoices category | Yes | Yes | Uses 12 approved invoice entries and semantically matched previews from the Templates library. |
 | Error | N/A | N/A | Add an error state when the catalog is connected to a remote data source. |
 
 ## Behavior rules
@@ -31,4 +31,5 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 - Canonical titles, categories, descriptions, and runtime paths: [`src/templateData.js`](../src/templateData.js)
 - Developer preview library and manifest: [`handoff/template-previews`](template-previews/README.md)
 - Forms preview library and manifest: [`handoff/form-previews`](form-previews/README.md)
+- Invoice preview reuse map: [`handoff/invoice-previews`](invoice-previews/README.md)
 - Runtime preview assets: [`public/assets/template-previews`](../public/assets/template-previews/)

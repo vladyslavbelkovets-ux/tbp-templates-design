@@ -306,9 +306,10 @@ function Catalog({ config, query, onQueryChange, onMessage }) {
     const categoryIndex = config.categoryOptions.indexOf(activeCategory);
 
     return sourceItems.filter((template, index) => {
+      const usesItemCategories = config.key === "templates" || config.key === "invoice";
       const matchesCategory = isMobileSearch
         || activeCategory === config.categoryOptions[0]
-        || (config.key === "templates" ? template.category === activeCategory : index % (config.categoryOptions.length - 1) === categoryIndex - 1);
+        || (usesItemCategories ? template.category === activeCategory : index % (config.categoryOptions.length - 1) === categoryIndex - 1);
       const matchesQuery = !normalizedQuery
         || `${template.title} ${template.category} ${template.description}`.toLowerCase().includes(normalizedQuery);
       return matchesCategory && matchesQuery;
@@ -895,7 +896,6 @@ const pageConfigs = {
     mobilePlaceholder: "Search invoices…",
     categoryOptions: ["All templates", "Popular", "Business", "Freelance", "Contractors", "Services"],
     items: invoiceTemplates,
-    mobileItems: repeatTemplates(invoiceTemplates, 60, "invoice-mobile"),
     guide: "invoice",
     ctaLabel: "Use template",
   },

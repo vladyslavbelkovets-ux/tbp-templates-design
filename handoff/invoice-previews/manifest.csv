@@ -1,0 +1,13 @@
+invoice,description,source_template,runtime_preview_path,handoff_preview_path
+"Simple Invoice","A clean, no-frills invoice for billing any client.","Receipts — General Receipt","public/assets/template-previews/Receipts-General Receipt.png","handoff/invoice-previews/Simple Invoice.png"
+"Commercial Invoice","Itemize goods for cross-border shipments and customs.","Receipts — Sales Receipt","public/assets/template-previews/Receipts-Sales Receipt.png","handoff/invoice-previews/Commercial Invoice.png"
+"Freelance Invoice","Bill clients for project or hourly freelance work.","Contracts — Freelance Contract","public/assets/template-previews/Contracts-Freelance Contract.png","handoff/invoice-previews/Freelance Invoice.png"
+"Contractor Invoice","Charge for labor, materials, and project milestones.","Estimates — Contractor Estimate Template","public/assets/template-previews/Estimates-Contractor Estimate Template.png","handoff/invoice-previews/Contractor Invoice.png"
+"Consulting Invoice","Bill for advisory hours, retainers, and engagements.","Contracts — Consulting Contract","public/assets/template-previews/Contracts-Consulting Contract.png","handoff/invoice-previews/Consulting Invoice.png"
+"Construction Invoice","Itemize labor, materials, and equipment on a build.","Estimates — Construction Estimate Template","public/assets/template-previews/Estimates-Construction Estimate Template.png","handoff/invoice-previews/Construction Invoice.png"
+"Proforma Invoice","Send a preliminary estimate before goods ship.","Estimates — Estimate Template","public/assets/template-previews/Estimates-Estimate Template.png","handoff/invoice-previews/Proforma Invoice.png"
+"Square Invoice","A modern invoice formatted for fast online payment.","Receipts — Payment Receipt","public/assets/template-previews/Receipts-Payment Receipt.png","handoff/invoice-previews/Square Invoice.png"
+"Auto Repair Invoice","List parts, labor, and shop fees for vehicle repairs.","Estimates — Job Estimate Template","public/assets/template-previews/Estimates-Job Estimate Template.png","handoff/invoice-previews/Auto Repair Invoice.png"
+"Cleaning Invoice","Bill for cleaning services by visit, room, or hour.","Contracts — Cleaning Contract","public/assets/template-previews/Contracts-Cleaning Contract.png","handoff/invoice-previews/Cleaning Invoice.png"
+"Plumbing Invoice","Charge for parts, labor, and call-out plumbing fees.","Contracts — Service Contract","public/assets/template-previews/Contracts-Service Contract.png","handoff/invoice-previews/Plumbing Invoice.png"
+"Catering Invoice","Itemize menu, headcount, and service for an event.","Contracts — Catering Contract","public/assets/template-previews/Contracts-Catering Contract.png","handoff/invoice-previews/Catering Invoice.png"

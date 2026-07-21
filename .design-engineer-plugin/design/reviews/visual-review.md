@@ -17,16 +17,18 @@
 - Applied the source grayscale/contrast treatment to 1099-NEC, W-2, and CMS-1500, removing the incorrect red appearance.
 - Synchronized Forms CTAs to `Fill out form` and copied the source descriptions exactly.
 - Added the complete Invoice content section: introduction, included fields, related categories, FAQ, accounting notice, and responsive layout.
-- Kept Invoice catalog content invoice-specific and reused the existing invoice preview library.
+- Kept all 12 approved Invoice titles and restored the exact source descriptions.
+- Replaced generated Invoice artwork with semantically matched, existing Templates previews; no new preview artwork is used.
 - Added the Invoice single-page rule on desktop: 12 cards and no pagination.
-- Preserved mobile pagination at 6 cards per page.
+- Removed the old repeated mobile fixture: Invoice now contains 12 unique cards and two mobile pages at 6 cards per page.
 - Confirmed the mobile search empty state removes categories and pagination and resizes to its content.
 - Preserved Inter, existing radii, UI-PES controls, footer accordions, and the established page tokens.
 
 ## Verification
 
 - Production build passes with `npm run build`.
-- Invoice desktop: 12 cards, no pagination, 1440 px document width, no horizontal overflow, and no broken images.
+- Invoice desktop: 12 cards with reused Templates documents, no pagination, 1440 px document width, no horizontal overflow, and no broken images.
+- Invoice mobile: 6 unique cards on page 1, two pages total, no horizontal overflow, and no broken images.
 - Forms mobile: 6 cards, pagination visible, 375 px document width, no horizontal overflow, and no broken images.
 - Templates mobile empty state: no cards, no pagination, clear-search action visible, and no horizontal overflow.
 - Forms desktop visually matches the restored Figma frame, including grayscale previews and `Frequently asked questions` copy.
@@ -38,9 +40,8 @@
 - `qa/figma-forms-restored.png`
 - `qa/forms-desktop-final.png`
 - `qa/forms-mobile-final.png`
-- `qa/invoice-desktop-final.png`
-- `qa/invoice-mobile-final.png`
 - `qa/templates-empty-mobile-final.png`
+- `handoff/invoice-previews/manifest.csv`
 
 ## Result
 
