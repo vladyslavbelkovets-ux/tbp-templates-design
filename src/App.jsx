@@ -21,7 +21,7 @@ import {
   X,
 } from "@phosphor-icons/react";
 import { Button, IconButton, Input } from "@universe-forma/ui-pes";
-import { categories, formMobileTemplates, serviceCategories, templates, templatesPerPage } from "./templateData";
+import { categories, formTemplates, invoiceTemplates, serviceCategories, templates, templatesPerPage } from "./templateData";
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
@@ -758,8 +758,8 @@ const pageConfigs = {
     placeholder: "Search invoices…",
     mobilePlaceholder: "Search invoices…",
     categoryOptions: serviceCategories,
-    items: templates.slice(0, 12),
-    mobileItems: templates,
+    items: invoiceTemplates,
+    mobileItems: repeatTemplates(invoiceTemplates, 60, "invoice-mobile"),
     guide: null,
   },
   forms: {
@@ -772,8 +772,8 @@ const pageConfigs = {
     placeholder: "Search form…",
     mobilePlaceholder: "Search forms…",
     categoryOptions: serviceCategories,
-    items: repeatTemplates(templates, 120, "forms"),
-    mobileItems: formMobileTemplates,
+    items: repeatTemplates(formTemplates, 120, "forms"),
+    mobileItems: repeatTemplates(formTemplates, 60, "forms-mobile"),
     guide: "forms",
   },
 };
