@@ -6,6 +6,8 @@ No actionable P0, P1, or P2 visual issues remain in the reviewed desktop and mob
 
 ## Source of truth
 
+- Desktop card states: A/B Testing TBP node `27980:65054`.
+- Card component: default node `28079:15399`; hover node `28079:15421`.
 - Templates: Templates Library node `15:19695`.
 - Forms content and previews: Templates Library node `72:43790`.
 - Forms handoff: A/B Testing TBP node `27980:65156`.
@@ -13,6 +15,9 @@ No actionable P0, P1, or P2 visual issues remain in the reviewed desktop and mob
 
 ## Verified outcomes
 
+- Templates, Invoices, and Forms share the approved desktop card: 348 px tall, 250 px preview dock, and 98 px content area.
+- Desktop default uses the neutral dock and hides the CTA; hover and keyboard focus use the blue dock, raised shadow, enlarged preview, and centered filled CTA.
+- Mobile keeps the approved default-only card: 232 px tall, blue preview dock, chevron action, and no overlaid CTA.
 - Forms desktop contains the 12 correct official forms, not Template receipt/estimate content.
 - Forms titles, short descriptions, preview images, `Fill out form` CTA, and top-aligned crops match the approved source.
 - 1099-NEC, W-2, and CMS-1500 use the Figma grayscale/contrast treatment instead of rendering red.

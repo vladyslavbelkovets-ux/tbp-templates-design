@@ -31,13 +31,15 @@ Every rendered `<button>` and `<input>` now comes from these UI-PES components.
 
 The package does not export equivalents for the site header, template card, responsive grid, pagination wrapper, contract table, FAQ wrapper, legal notice, or footer. Those blocks remain project components and use UI-PES controls inside them.
 
+The shared Template Card composition is used by Templates, Invoices, and Forms. Desktop has Default and Hover/keyboard-focus states; mobile uses Default only. Its CTA stays the UI-PES filled `Button` and changes copy by catalog type.
+
 `Search`, `Tabs`, `BaseDropdown`, and `Toaster` are not used here. Replacing the approved search field, category list, mobile navigation, or status message with those patterns would change the current Figma behavior.
 
 ## Styling rules
 
 - Keep UI-PES component markup and behavior.
 - Override only project-facing geometry and The Best PDF tokens.
-- Keep Inter and the existing radii: 4 px controls, 6 px search, 8 px mobile tabs, 12 px cards, and 16 px card surfaces/DataGrid.
+- Keep Inter and the existing radii: 4 px controls, 6 px search, 8 px mobile tabs, 12 px mobile cards, and 16 px desktop card surfaces/DataGrid.
 - Do not restore local copies under `vendor/ui-pes`.
 
 ## Verification

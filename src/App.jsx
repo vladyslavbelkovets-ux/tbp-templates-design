@@ -216,20 +216,20 @@ function TemplateCard({ template, onUse, state = "interactive", ctaLabel = "Use 
         <div className={`template-card__preview${template.previewFit === "stretch" ? " template-card__preview--stretch" : ""}${template.previewTone === "monochrome" ? " template-card__preview--monochrome" : ""}`}>
           <img src={asset(template.preview)} alt={`${template.title} preview`} />
         </div>
+        <Button
+          variant="filled"
+          color="primary"
+          size="md"
+          className="template-card__button"
+        >
+          {ctaLabel}
+        </Button>
       </div>
       <div className="template-card__body">
         <div className="template-card__copy">
           <h2>{template.title}</h2>
           <p>{template.description}</p>
         </div>
-        <Button
-          variant="outlined"
-          color="action"
-          size="ms"
-          className="template-card__button"
-        >
-          {ctaLabel}
-        </Button>
         <IconButton
           className="template-card__chevron"
           type="button"
