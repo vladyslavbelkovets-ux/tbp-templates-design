@@ -1664,18 +1664,19 @@ a { color: inherit; text-decoration: none; }
 
   .categories__list button {
     width: auto;
-    height: 38px;
+    height: 32px;
     flex: 0 0 auto;
-    padding: 7px 12px;
-    border-radius: var(--radius-tab-lg);
+    padding: 7px 8px;
+    border-radius: 4px;
     background: transparent;
     color: var(--color-text-primary);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 18px;
   }
 
   .categories__list button.is-active {
+    padding-inline: 10px;
     background: rgba(31, 93, 226, 0.08);
     color: var(--color-primary);
   }
@@ -1684,7 +1685,7 @@ a { color: inherit; text-decoration: none; }
 
   .template-grid {
     grid-template-columns: 1fr;
-    grid-auto-rows: 232px;
+    grid-auto-rows: 260px;
     gap: 12px;
   }
 
@@ -1695,16 +1696,15 @@ a { color: inherit; text-decoration: none; }
 
   .catalog--mobile-search .catalog__panel {
     min-height: 0;
-    padding-bottom: 16px;
   }
 
   .catalog--mobile-search .template-list { gap: 0; }
 
   .catalog--mobile-search .empty-state {
     width: 100%;
-    height: auto;
+    height: 336px;
     min-height: 0;
-    aspect-ratio: 1;
+    aspect-ratio: auto;
     padding: 24px;
   }
 
@@ -1734,8 +1734,8 @@ a { color: inherit; text-decoration: none; }
     justify-self: center;
     width: 100%;
     max-width: 375px;
-    height: 232px;
-    border-radius: var(--radius-card);
+    height: 260px;
+    border-radius: var(--radius-card-desktop);
     box-shadow: none;
   }
 
@@ -1744,10 +1744,10 @@ a { color: inherit; text-decoration: none; }
   .template-card--hover { box-shadow: none; }
 
   .template-card__dock {
-    flex-basis: 136px;
-    height: 136px;
+    flex-basis: 162px;
+    height: 162px;
     padding: 16px;
-    background: var(--color-card-dock-hover);
+    background: var(--color-card-dock);
   }
 
   .template-card:hover .template-card__dock,
@@ -1756,17 +1756,17 @@ a { color: inherit; text-decoration: none; }
 
   .template-card__preview {
     width: 100%;
-    border-radius: var(--radius-card-preview);
+    border-radius: var(--radius-card-preview-desktop);
   }
 
   .template-card__body {
-    flex: 0 0 96px;
+    flex: 0 0 98px;
     flex-direction: row;
     align-items: center;
     gap: 20px;
-    height: 96px;
+    height: 98px;
     padding: 16px;
-    border-radius: var(--radius-surface-lg);
+    border-radius: 0;
   }
 
   .template-card__copy {
@@ -1777,8 +1777,8 @@ a { color: inherit; text-decoration: none; }
   }
 
   .template-card h2 {
-    font-weight: 600;
-    line-height: 20px;
+    font-weight: 500;
+    line-height: 22px;
   }
 
   .template-card__button { display: none; }

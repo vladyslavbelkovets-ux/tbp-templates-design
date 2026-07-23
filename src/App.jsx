@@ -878,7 +878,7 @@ const pageConfigs = {
     singular: "template",
     heading: "document templates",
     desktopTagline: "Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.",
-    mobileTagline: "Browse 10,000+ free templates. Customize and download in minutes.",
+    mobileTagline: "Invoices, contracts, receipts and more. Customize and download in PDF, Word, or Excel.",
     placeholder: "Search templates…",
     mobilePlaceholder: "Search templates…",
     categoryOptions: categories,

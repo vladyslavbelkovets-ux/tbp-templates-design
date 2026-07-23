@@ -11,7 +11,7 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 | Search results | Covered | Yes | Mobile search hides category tabs and pagination. |
 | Empty results | Yes | Yes | Hide categories, center the empty state, and let “Clear search” reset the query and return to page 1. |
 | Loading | Yes | Yes | Card placeholders preserve the final grid footprint and prevent layout shift. |
-| Card default | Yes | Yes | Desktop: 348 px card, neutral 250 px dock, 98 px body, CTA hidden. Preview starts at the top. |
+| Card default | Yes | Yes | Desktop: 348/250/98 px. Mobile: 260/162/98 px. Both use the neutral dock and top-aligned preview. |
 | Card hover / focus | Yes | N/A | Blue dock, 16 px dock padding, centered filled CTA, and raised shadow. Keyboard focus reuses hover; touch stays default-only. |
 | Forms category | Yes | Yes | Desktop and mobile use the dedicated forms preview library. |
 | Invoices category | Yes | Yes | Uses 12 approved invoice entries and semantically matched previews from the Templates library. |
@@ -25,7 +25,7 @@ Figma source: [Templates library — Master 2](https://www.figma.com/design/EGgC
 - Clamp card descriptions to two lines and keep each description specific to its template.
 - Align document previews to the top of their image area.
 - Use `Use template` for Templates and Invoices; use `Fill out form` for Forms.
-- Desktop categories use the left navigation; mobile categories use horizontally scrollable tabs.
+- Desktop categories use the left navigation; mobile categories use horizontally scrollable 32 px tabs with 14/18 px labels.
 
 ## Content and assets
 

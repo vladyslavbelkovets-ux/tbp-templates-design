@@ -3,6 +3,7 @@
 ## Scope
 
 - Desktop card-state source: A/B Testing TBP node `27980:65054`.
+- Mobile sources: Templates `27980:65059`, Forms `27980:65222`, and Invoices `27980:65307`.
 - Forms source: Templates Library node `72:43790`.
 - Forms handoff: A/B Testing TBP node `27980:65156`.
 - Invoice design: A/B Testing TBP node `27980:65291`.
@@ -14,6 +15,8 @@
 - Rebuilt the shared desktop card to match the approved Default and Hover states across Templates, Invoices, and Forms.
 - Moved the filled CTA into the preview dock: hidden in Default and visible on pointer hover or keyboard focus.
 - Matched the 348 px card, 250 px preview dock, 98 px content area, 16 px card radius, dock colors, preview growth, and hover shadow.
+- Updated the shared mobile card to 260 px with a neutral 162 px preview dock, 98 px content area, 16 px outer radius, and 10 px preview radius.
+- Updated mobile category tabs to the approved compact 32 px treatment and synchronized the Templates mobile descriptor with the current Figma frame.
 - Restored all 12 Forms desktop cards from the verified Templates Library source.
 - Kept every Forms card connected to the local `Template Card` component; only title, description, CTA, and image overrides changed.
 - Replaced receipt and estimate content with W-9, W-4, 1099-NEC, W-2, 1040-ES, 941, Schedule C, I-9, I-864, DS-11, DS-82, and CMS-1500.
@@ -34,7 +37,7 @@
 - Templates, Invoices, and Forms desktop each render the shared 348/250/98 px card geometry without horizontal overflow.
 - Templates and Invoices expose `Use template`; Forms exposes `Fill out form`.
 - Keyboard focus displays the same raised state as pointer hover with a visible focus outline.
-- Mobile remains default-only at 232 px card height with its chevron action and no overlaid CTA.
+- Mobile remains default-only at 260 px card height with its chevron action and no overlaid CTA.
 - Invoice desktop: 12 cards with reused Templates documents, no pagination, 1440 px document width, no horizontal overflow, and no broken images.
 - Invoice mobile: 6 unique cards on page 1, two pages total, no horizontal overflow, and no broken images.
 - Forms mobile: 6 cards, pagination visible, 375 px document width, no horizontal overflow, and no broken images.
